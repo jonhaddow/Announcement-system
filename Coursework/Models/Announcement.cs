@@ -13,6 +13,7 @@ namespace Coursework.Models
         [Required]
         public virtual string Title { get; set; }
 
+        [DataType(DataType.MultilineText)]
         public virtual string Content { get; set; }
 
     }

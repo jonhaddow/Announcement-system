@@ -4,31 +4,31 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
-
-<div>
-    <h4>Announcement</h4>
+<div class="col-md-8 col-md-offset-2">
+    <table id="announcementDetailsHeader">
+        <tr>
+            <td>
+                <a href="@Url.Action("Index")" class="backArrow">
+                    <i class="material-icons ">arrow_back</i>
+                </a>
+            </td>
+            <td>
+                <h2 class="detailsAnnouncementTitle">@Model.Title</h2>
+            </td>
+            @if (ViewBag.isLecturer)
+            {
+                <td>
+                    <a href="@Url.Action("Edit", new { id = Model.Id })" class="editAnnouncementIcon">
+                        <span class="material-icons">edit</span>
+                    </a>
+                </td>
+            }
+        </tr>
+    </table>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Title)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Content)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Content)
-        </dd>
-
-    </dl>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+
+
+<div class="col-md-offset-2 col-md-8">
+    @Model.Content
+</div>

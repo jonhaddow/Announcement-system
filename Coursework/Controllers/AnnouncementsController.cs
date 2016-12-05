@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Coursework.Models;
+using System.Web.Security;
 
 namespace Coursework.Controllers
 {
@@ -17,6 +18,9 @@ namespace Coursework.Controllers
         // GET: Announcements
         public ActionResult Index()
         {
+            // Check if user is lecturer or student
+            ViewBag.isLecturer = User.IsInRole("lecturer");
+            
             return View(db.Announcements.ToList());
         }
 
@@ -32,6 +36,8 @@ namespace Coursework.Controllers
             {
                 return HttpNotFound();
             }
+
+            ViewBag.isLecturer = User.IsInRole("lecturer");
             return View(announcement);
         }
 

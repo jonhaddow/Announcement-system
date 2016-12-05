@@ -16,9 +16,60 @@
     white-space: normal;
 }
 
-/* Set width on the form input elements since they're 100% wide by default */
-input,
-select,
-textarea {
-    max-width: 280px;
+.delete-icon {
+    color: red;
+    float: right;
 }
+
+textarea.contentTextArea {
+    height: 200px;
+}
+
+.table {
+}
+
+.tableAnnouncement {
+    display: block;
+    width: 100%;
+    text-decoration: none;
+    color: black;
+}
+
+    .tableAnnouncement:hover {
+        background-color: #efefef;
+        text-decoration: none;
+        color: black;
+    }
+
+.announcementTitle {
+    font-size: 25px;
+}
+
+.announcementContent {
+    font-size: 20px;
+}
+
+.announcementEdit {
+    width: 5%;
+}
+
+.detailsAnnouncementTitle {
+    vertical-align: middle;
+}
+
+#announcementDetailsHeader {
+    width: 100%;
+}
+
+.editAnnouncementIcon {
+    float: right;
+    vertical-align: middle;
+}
+
+.backArrow {
+    padding-right: 20px;
+}
+
+    .backArrow:hover {
+        text-decoration: none;
+    }
