@@ -29,5 +29,7 @@ namespace Coursework.Models
         {
             return new ApplicationDbContext();
         }
+
+        public System.Data.Entity.DbSet<Coursework.Models.Announcement> Announcements { get; set; }
     }
 }
