@@ -18,6 +18,8 @@ namespace Coursework
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            // Stop ASP.NET version number appearing in response header
+            MvcHandler.DisableMvcResponseHeader = true;
         }
     }
 }

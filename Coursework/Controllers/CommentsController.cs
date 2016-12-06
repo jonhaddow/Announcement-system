@@ -25,15 +25,7 @@ namespace Coursework.Controllers
             ViewBag.AnnouncementId = id;
             Announcement a = db.Announcements.Find(id);
             ViewBag.AnnouncementTitle = a.Title;
-            if (id != null)
-            {
-                return View(db.Comments.ToList().Where(x => x.AnnouncementId == id));
-
-            }
-            else
-            {
-                return View(db.Comments.ToList());
-            }
+            return View(db.Comments.ToList().Where(x => x.AnnouncementId == id));
         }
 
         // GET: Comments/Details/5
@@ -69,11 +61,13 @@ namespace Coursework.Controllers
 
             if (ModelState.IsValid)
             {
-                comment.User = getUser();
+                var user = getUser();
+                comment.UserId = user.Id;
+                comment.UserName = user.UserName;
                 comment.AnnouncementId = aId;
                 db.Comments.Add(comment);
                 db.SaveChanges();
-                return RedirectToAction("Index",new { id = aId });
+                return RedirectToAction("Index", new { id = aId });
             }
 
             return View(comment);
@@ -104,6 +98,9 @@ namespace Coursework.Controllers
         {
             if (ModelState.IsValid)
             {
+                var user = getUser();
+                comment.UserId = user.Id;
+                comment.UserName = user.UserName;
                 comment.AnnouncementId = aId;
                 db.Entry(comment).State = EntityState.Modified;
                 db.SaveChanges();

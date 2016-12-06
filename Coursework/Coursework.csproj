@@ -233,6 +233,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\myBootstrapTheme.css" />
+    <Content Include="Content\simple-sidebar.css" />
     <Content Include="CustomScripts\DetailsAnnouncement.js" />
     <Content Include="CustomScripts\EditAnnouncement.js" />
     <Content Include="CustomScripts\IndexAnnouncement.js" />
