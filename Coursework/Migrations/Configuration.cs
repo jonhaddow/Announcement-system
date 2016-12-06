@@ -18,7 +18,6 @@ namespace Coursework.Migrations
         protected override void Seed(ApplicationDbContext context)
         {
             // Define information to seed
-            string roleName = "lecturer";
             string[] lecturerUsernames =
             {
                 "Lecturer1@email.com",
@@ -34,12 +33,12 @@ namespace Coursework.Migrations
             };
             string defaultPassword = "password";
 
-            // If role has not already been assigned
-            if (!context.Roles.Any(r => r.Name == roleName))
+            // If claim has not already been assigned
+            if (!context.Roles.Any(r => r.Name == "canModifyAnnouncements"))
             {
-                // Get role manager and create lecturer role
+                // Get role manager and create claims
                 var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
-                var identityRole = roleManager.Create(new IdentityRole(roleName));
+                var identityRole = roleManager.Create(new IdentityRole("canModifyAnnouncements"));
             }
 
             // Get user manager
@@ -53,7 +52,7 @@ namespace Coursework.Migrations
                     // Seed lecturer data and role
                     ApplicationUser lecturer = new ApplicationUser { UserName = lecturerUsername };
                     userManager.Create(lecturer, defaultPassword);
-                    userManager.AddToRole(lecturer.Id, roleName);
+                    userManager.AddToRole(lecturer.Id, "canModifyAnnouncements");
                 }
             }
 

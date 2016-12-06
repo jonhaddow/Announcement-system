@@ -14,13 +14,14 @@ namespace Coursework.Controllers
 {
     public class AnnouncementsController : Controller
     {
+       
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Announcements
         public ActionResult Index()
         {
             // Check if user is lecturer or student
-            ViewBag.isLecturer = User.IsInRole("lecturer");
+            ViewBag.isLecturer = User.IsInRole("canModifyAnnouncements");
             
             return View(db.Announcements.ToList());
         }
@@ -38,11 +39,12 @@ namespace Coursework.Controllers
                 return HttpNotFound();
             }
 
-            ViewBag.isLecturer = User.IsInRole("lecturer");
+            ViewBag.isLecturer = User.IsInRole("canModifyAnnouncements");
             return View(announcement);
         }
 
         // GET: Announcements/Create
+        [Authorize(Roles = "canModifyAnnouncements")]
         public ActionResult Create()
         {
             return View();
@@ -53,6 +55,7 @@ namespace Coursework.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles= "canModifyAnnouncements")]
         public ActionResult Create([Bind(Include = "Id,Title,Content")] Announcement announcement)
         {
             if (ModelState.IsValid)
@@ -67,6 +70,7 @@ namespace Coursework.Controllers
         }
 
         // GET: Announcements/Edit/5
+        [Authorize(Roles = "canModifyAnnouncements")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -86,6 +90,7 @@ namespace Coursework.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "canModifyAnnouncements")]
         public ActionResult Edit([Bind(Include = "Id,Title,Content")] Announcement announcement)
         {
             if (ModelState.IsValid)
@@ -98,6 +103,7 @@ namespace Coursework.Controllers
         }
 
         // GET: Announcements/Delete/5
+        [Authorize(Roles = "canModifyAnnouncements")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -115,6 +121,7 @@ namespace Coursework.Controllers
         // POST: Announcements/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "canModifyAnnouncements")]
         public ActionResult DeleteConfirmed(int id)
         {
             Announcement announcement = db.Announcements.Find(id);
