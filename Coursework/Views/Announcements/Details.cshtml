@@ -30,5 +30,17 @@
 
 
 <div class="col-md-offset-2 col-md-8">
-    @Model.Content
+    <div id="announcementContent">
+        @Model.Content
+    </div>
+
+
+
+    <div id="announcementComments">
+        @Html.ActionLink("Go to comments", "Index", "Comments", new { id = Model.Id }, "" )
+    </div>
+
+
 </div>
+
+<script src="~/CustomScripts/DetailsAnnouncement.js"></script>

@@ -8,13 +8,14 @@ namespace Coursework.Models
 {
     public class Announcement
     {
-        public virtual int Id { get; set; }
+        public  int Id { get; set; }
 
         [Required]
-        public virtual string Title { get; set; }
+        public  string Title { get; set; }
 
         [DataType(DataType.MultilineText)]
-        public virtual string Content { get; set; }
-
+        public  string Content { get; set; }
+        
+        public  ApplicationUser User { get; set; }
     }
 }

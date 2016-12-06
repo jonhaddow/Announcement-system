@@ -7,120 +7,136 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Coursework.Models;
-using System.Web.Security;
 using Microsoft.AspNet.Identity;
 
 namespace Coursework.Controllers
 {
-    public class AnnouncementsController : Controller
+    public class CommentsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: Announcements
-        public ActionResult Index()
+        // GET: Comments
+        public ActionResult Index(int? id)
         {
-            // Check if user is lecturer or student
-            ViewBag.isLecturer = User.IsInRole("lecturer");
-            
-            return View(db.Announcements.ToList());
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            ViewBag.AnnouncementId = id;
+            Announcement a = db.Announcements.Find(id);
+            ViewBag.AnnouncementTitle = a.Title;
+            if (id != null)
+            {
+                return View(db.Comments.ToList().Where(x => x.AnnouncementId == id));
+
+            }
+            else
+            {
+                return View(db.Comments.ToList());
+            }
         }
 
-        // GET: Announcements/Details/5
+        // GET: Comments/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Announcement announcement = db.Announcements.Find(id);
-            if (announcement == null)
+            Comment comment = db.Comments.Find(id);
+            if (comment == null)
             {
                 return HttpNotFound();
             }
-
-            ViewBag.isLecturer = User.IsInRole("lecturer");
-            return View(announcement);
+            ViewBag.AnnouncementId = comment.AnnouncementId;
+            return View(comment);
         }
 
-        // GET: Announcements/Create
-        public ActionResult Create()
+        // GET: Comments/Create/5
+        public ActionResult Create(int? id)
         {
+            ViewBag.AnnouncementId = id;
             return View();
         }
 
-        // POST: Announcements/Create
+        // POST: Comments/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Title,Content")] Announcement announcement)
+        public ActionResult Create(int aId, [Bind(Include = "Id,Content")] Comment comment)
         {
+
             if (ModelState.IsValid)
             {
-                announcement.User = getUser();
-                db.Announcements.Add(announcement);
+                comment.User = getUser();
+                comment.AnnouncementId = aId;
+                db.Comments.Add(comment);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index",new { id = aId });
             }
 
-            return View(announcement);
+            return View(comment);
         }
 
-        // GET: Announcements/Edit/5
+        // GET: Comments/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Announcement announcement = db.Announcements.Find(id);
-            if (announcement == null)
+            Comment comment = db.Comments.Find(id);
+            if (comment == null)
             {
                 return HttpNotFound();
             }
-            return View(announcement);
+            ViewBag.AnnouncementId = comment.AnnouncementId;
+            return View(comment);
         }
 
-        // POST: Announcements/Edit/5
+        // POST: Comments/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Title,Content")] Announcement announcement)
+        public ActionResult Edit(int aId, [Bind(Include = "Id,Content")] Comment comment)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(announcement).State = EntityState.Modified;
+                comment.AnnouncementId = aId;
+                db.Entry(comment).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { id = aId });
             }
-            return View(announcement);
+            return View(comment);
         }
 
-        // GET: Announcements/Delete/5
+        // GET: Comments/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Announcement announcement = db.Announcements.Find(id);
-            if (announcement == null)
+            Comment comment = db.Comments.Find(id);
+            if (comment == null)
             {
                 return HttpNotFound();
             }
-            return View(announcement);
+            ViewBag.AnnouncementId = comment.AnnouncementId;
+            return View(comment);
         }
 
-        // POST: Announcements/Delete/5
+        // POST: Comments/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(int aId, int id)
         {
-            Announcement announcement = db.Announcements.Find(id);
-            db.Announcements.Remove(announcement);
+            Comment comment = db.Comments.Find(id);
+            db.Comments.Remove(comment);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", new { id = aId });
         }
 
         protected override void Dispose(bool disposing)

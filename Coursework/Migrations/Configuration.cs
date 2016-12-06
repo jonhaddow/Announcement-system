@@ -14,13 +14,16 @@ namespace Coursework.Migrations
         {
             AutomaticMigrationsEnabled = true;
         }
-
         //  This method will be called after migrating to the latest version.
         protected override void Seed(ApplicationDbContext context)
         {
             // Define information to seed
             string roleName = "lecturer";
-            string lecturerUsername = "Lecturer1@email.com";
+            string[] lecturerUsernames =
+            {
+                "Lecturer1@email.com",
+                "Lecturer2@email.com"
+            };
             string[] studentUsernames =
             {
                 "Student1@email.com",
@@ -42,14 +45,18 @@ namespace Coursework.Migrations
             // Get user manager
             var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
 
-            // If lecturer data is not already registered
-            if (!context.Users.Any(u => u.UserName == lecturerUsername))
+            foreach (string lecturerUsername in lecturerUsernames)
             {
-                // Seed lecturer data and role
-                ApplicationUser lecturer = new ApplicationUser { UserName = lecturerUsername };
-                userManager.Create(lecturer, defaultPassword);
-                userManager.AddToRole(lecturer.Id, roleName);
+                // If lecturer data is not already registered
+                if (!context.Users.Any(u => u.UserName == lecturerUsername))
+                {
+                    // Seed lecturer data and role
+                    ApplicationUser lecturer = new ApplicationUser { UserName = lecturerUsername };
+                    userManager.Create(lecturer, defaultPassword);
+                    userManager.AddToRole(lecturer.Id, roleName);
+                }
             }
+
 
             // Seed student data
             foreach (string username in studentUsernames)

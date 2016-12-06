@@ -31,5 +31,7 @@ namespace Coursework.Models
         }
 
         public System.Data.Entity.DbSet<Coursework.Models.Announcement> Announcements { get; set; }
+
+        public System.Data.Entity.DbSet<Coursework.Models.Comment> Comments { get; set; }
     }
 }
