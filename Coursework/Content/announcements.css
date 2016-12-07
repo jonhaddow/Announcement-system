@@ -1,0 +1,69 @@
+﻿.sidebar {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    background-color: #7b90ba;
+    color: white;
+}
+
+.sidebar > h2 {
+    text-align: center;
+}
+
+.create-announcement-link {
+    color: #ebd470;
+    text-decoration: underline;
+    text-align: right;
+}
+
+.announcement-link {
+    padding: 20px 10px 20px 10px;
+    height: auto;
+    text-align: center;
+    width: 100%;
+    border: none;
+    border-bottom:  2px solid #7b90ba;
+    cursor: pointer;
+    color: black;
+    display: block;
+    background-color: #fff4c3;
+}
+
+    .announcement-link:hover {
+        color: blue;
+        text-decoration: none;
+    }
+
+.selected {
+    background-color: #ebd470;
+}
+
+    .selected:hover {
+        color: black;
+    }
+
+#selectedAnnouncement {
+    padding: 20px 60px 20px 60px;
+    color: #666;
+    background-color: white;
+    margin: 30px 10px 30px 10px;
+}
+
+.announcement-content {
+    padding-top: 20px;
+}
+
+.outline {
+    background-color: #aabad9;
+}
+
+.heading > h2 {
+  display: inline;
+}
+
+.author {
+    padding-left: 15px;
+}
+
+.edit-announcement-icon {
+    float: right;
+}

@@ -4,36 +4,43 @@
     ViewBag.Title = "Announcements";
 }
 
-<h2>@ViewBag.Title</h2>
-@if (ViewBag.isLecturer)
-{
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-}
-<table class="table">
+<div class="sidebar col-sm-4">
+    <h2>@ViewBag.Title</h2>
+    @if (ViewBag.isLecturer)
+    {
+        <div class="create-announcement-link">
+            <p>
+                @Html.ActionLink("Create New", "Create", "", new { @class = "create-announcement-link" })
+            </p>
+        </div>
+    }
 
     @foreach (var item in Model)
     {
-        <tr>
-            <td>
-                <a class="tableAnnouncement" href="@Url.Action("Details", new {id = item.Id})">
-                    <b class="announcementTitle">@item.Title - </b><span class="announcementContent">@item.Content</span>
-                </a>
-            </td>
-            @if (ViewBag.isLecturer)
+        using (Ajax.BeginForm("GetAnnouncement", "Announcements",
+            new AjaxOptions
             {
-                <td class="announcementEdit">
-
-                    <a href="@Url.Action("Edit", new { id = item.Id })">
-                        <i class="material-icons">edit</i>
-                    </a>
-
-                </td>
-            }
-        </tr>
+                InsertionMode= InsertionMode.Replace,
+                HttpMethod = "POST",
+                LoadingElementId = "ajax-loader",
+                UpdateTargetId = "selectedAnnouncement"
+            }))
+        {
+            <input hidden name="announcementId" value="@item.Id"/>
+            <input id="@item.Id" class="announcement-link" type="submit" onclick="changeAnnouncement(this);" value="@item.Title"/>
+        }
     }
-
-</table>
-
-<script src="~/CustomScripts/indexAnnouncement.js"></script>
+</div>
+<div class="outline col-sm-8">
+    <div id="selectedAnnouncement">
+        <img hidden id="ajax-loader" src="~/Content/ring.svg" />
+        Please select an announcement
+    </div>
+</div>
+@section Styles {
+    <link href="@Url.Content("~/Content/announcements.css")" rel="stylesheet" type="text/css" />
+}
+@section Scripts {
+    <script src="~/CustomScripts/indexAnnouncement.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+}
