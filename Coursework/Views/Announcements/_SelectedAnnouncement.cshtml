@@ -1,18 +1,24 @@
 ﻿@model Coursework.Models.Announcement
 
-<div class="heading">
-    <h2>@Model.Title</h2>
-    <span class="author">
-        By 
-        @Model.UserName
-    </span>
+<div class="announcement-heading">
+    <div class="title-info">
+        <h2>@Model.Title</h2>
+        <span class="author">
+            - @Model.UserName
+        </span>
+    </div>
     @if (ViewBag.isLecturer)
     {
-        <a class="edit-announcement-icon" href="@Url.Action("Edit", new { id = Model.Id })">
-            <i class="material-icons">edit</i>
-        </a>
+        <div class="edit-container">
+            <a class="edit-announcement-icon" href="@Url.Action("Edit", new { id = Model.Id })">
+                <i class="material-icons">edit</i>
+            </a>
+        </div>
     }
 </div>
 <div class=announcement-content>
     @Model.Content
+</div>
+<div class="announcement-comments">
+    @Html.ActionLink("Go to comments", "Index", "Comments", new { id = Model.Id }, "")
 </div>

@@ -5,9 +5,9 @@
     color: white;
 }
 
-.sidebar > h2 {
-    text-align: center;
-}
+    .sidebar > h2 {
+        text-align: center;
+    }
 
 .create-announcement-link {
     color: #ebd470;
@@ -19,9 +19,10 @@
     padding: 20px 10px 20px 10px;
     height: auto;
     text-align: center;
+    overflow: visible;
     width: 100%;
     border: none;
-    border-bottom:  2px solid #7b90ba;
+    border-bottom: 2px solid #7b90ba;
     cursor: pointer;
     color: black;
     display: block;
@@ -49,15 +50,27 @@
 }
 
 .announcement-content {
-    padding-top: 20px;
+    padding-top: 40px;
 }
 
 .outline {
     background-color: #aabad9;
 }
 
-.heading > h2 {
-  display: inline;
+
+.announcement-heading {
+    overflow: hidden;
+}
+
+.title-info {
+    float: left;
+    width: 60%;
+}
+
+.edit {
+    float: right;
+    width: 40%;
+    1;
 }
 
 .author {
@@ -66,4 +79,17 @@
 
 .edit-announcement-icon {
     float: right;
+}
+
+#ajax-loader {
+    position: fixed;
+    z-index: 999;
+    height: 6em;
+    width: 6em;
+    overflow: visible;
+    margin: auto;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
 }

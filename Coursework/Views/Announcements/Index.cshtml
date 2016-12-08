@@ -27,16 +27,17 @@
             }))
         {
             <input hidden name="announcementId" value="@item.Id"/>
-            <input id="@item.Id" class="announcement-link" type="submit" onclick="changeAnnouncement(this);" value="@item.Title"/>
+            <button id="@item.Id" class="announcement-link" type="submit" onclick="changeAnnouncement(this);">@item.Title</button>
         }
     }
 </div>
 <div class="outline col-sm-8">
     <div id="selectedAnnouncement">
-        <img hidden id="ajax-loader" src="~/Content/ring.svg" />
+        
         Please select an announcement
     </div>
 </div>
+<img hidden id="ajax-loader" src="~/Content/ring.svg" />
 @section Styles {
     <link href="@Url.Content("~/Content/announcements.css")" rel="stylesheet" type="text/css" />
 }
