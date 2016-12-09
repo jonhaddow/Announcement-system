@@ -18,10 +18,10 @@
                 @item.Content
             </td>
             <td>
-                @item.UserName
+                @item.User.UserName
             </td>
             <td>
-                @if (item.UserId == User.Identity.GetUserId())
+                @if (item.User.Id == User.Identity.GetUserId())
                 {
                     <a href="@Url.Action("Edit","Comments", new { id = item.Id })"><i class="material-icons">edit</i></a>
                     <a href="@Url.Action("Delete","Comments", new { id = item.Id })"><i class="material-icons">delete</i></a>

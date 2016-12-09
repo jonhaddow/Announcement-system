@@ -2,23 +2,23 @@
 
 <div class="announcement-heading">
     <div class="title-info">
-        <h2>@Model.Title</h2>
+        <h2>@Html.DisplayFor(a => a.Title)</h2>
         <span class="author">
-            - @Model.UserName
+            - @Html.DisplayFor(a => a.User.UserName)
         </span>
     </div>
     @if (ViewBag.isLecturer)
     {
-        <div class="edit-container">
-            <a class="edit-announcement-icon" href="@Url.Action("Edit", new { id = Model.Id })">
+        <div class="modify-container">
+            <a class="delete-announcement-icon" href="@Url.Action("Delete", new { Model.Id })">
+                <i class="material-icons">delete</i>
+            </a>
+            <a class="edit-announcement-icon" href="@Url.Action("Edit", new { Model.Id })">
                 <i class="material-icons">edit</i>
             </a>
         </div>
     }
 </div>
 <div class=announcement-content>
-    @Model.Content
-</div>
-<div class="announcement-comments">
-    @Html.ActionLink("Go to comments", "Index", "Comments", new { id = Model.Id }, "")
+    @Html.DisplayFor(a => a.Content)
 </div>

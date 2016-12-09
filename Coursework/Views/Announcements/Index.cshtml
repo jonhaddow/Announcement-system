@@ -4,6 +4,10 @@
     ViewBag.Title = "Announcements";
 }
 
+<div id="loadingSpinner">
+    <img src="~/Content/ring.svg" />
+</div>
+
 <div class="sidebar col-sm-4">
     <h2>@ViewBag.Title</h2>
     @if (ViewBag.isLecturer)
@@ -17,27 +21,21 @@
 
     @foreach (var item in Model)
     {
-        using (Ajax.BeginForm("GetAnnouncement", "Announcements",
-            new AjaxOptions
-            {
-                InsertionMode= InsertionMode.Replace,
-                HttpMethod = "POST",
-                LoadingElementId = "ajax-loader",
-                UpdateTargetId = "selectedAnnouncement"
-            }))
-        {
-            <input hidden name="announcementId" value="@item.Id"/>
-            <button id="@item.Id" class="announcement-link" type="submit" onclick="changeAnnouncement(this);">@item.Title</button>
-        }
+        <input hidden name="announcementId" value="@item.Id" />
+        <button id="@item.Id" class="announcement-link" type="submit">@item.Title</button>
     }
 </div>
+
 <div class="outline col-sm-8">
-    <div id="selectedAnnouncement">
-        
+
+    <div id="displayAnnouncement" class="selected-announcement">
         Please select an announcement
     </div>
+
+    <div hidden id="displayComments" class="announcement-comments"></div>
 </div>
-<img hidden id="ajax-loader" src="~/Content/ring.svg" />
+
+
 @section Styles {
     <link href="@Url.Content("~/Content/announcements.css")" rel="stylesheet" type="text/css" />
 }

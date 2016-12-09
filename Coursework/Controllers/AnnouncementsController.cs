@@ -31,7 +31,10 @@ namespace Coursework.Controllers
             // Check if user is lecturer or student
             ViewBag.isLecturer = User.IsInRole("canModifyAnnouncements");
 
-            return PartialView("_SelectedAnnouncement", db.Announcements.Find(announcementId));
+            // Get announcement from id
+            Announcement announcement = db.Announcements.Find(announcementId);
+
+            return PartialView("_SelectedAnnouncement", announcement);
         }
 
         // GET: Announcements/Details/5
@@ -69,8 +72,7 @@ namespace Coursework.Controllers
             if (ModelState.IsValid)
             {
                 ApplicationUser user = getUser();
-                announcement.UserId = user.Id;
-                announcement.UserName = user.UserName;
+                announcement.User = user;
                 db.Announcements.Add(announcement);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -106,8 +108,7 @@ namespace Coursework.Controllers
             if (ModelState.IsValid)
             {
                 ApplicationUser user = getUser();
-                announcement.UserId = user.Id;
-                announcement.UserName = user.UserName;
+                announcement.User = user;
                 db.Entry(announcement).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");

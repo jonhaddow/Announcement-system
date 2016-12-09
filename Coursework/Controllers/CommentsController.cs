@@ -25,7 +25,15 @@ namespace Coursework.Controllers
             ViewBag.AnnouncementId = id;
             Announcement a = db.Announcements.Find(id);
             ViewBag.AnnouncementTitle = a.Title;
-            return View(db.Comments.ToList().Where(x => x.AnnouncementId == id));
+            return View(db.Comments.ToList().Where(x => x.Announcement.Id == id));
+        }
+
+        public ActionResult GetComments(int announcementId)
+        {
+            // Get list of comments associated with the given announcement id
+            IEnumerable<Comment> listOfComments = db.Comments.ToList().Where(x => x.Announcement.Id == announcementId);
+
+            return PartialView("_AnnouncementComments", listOfComments);
         }
 
         // GET: Comments/Details/5
@@ -40,7 +48,7 @@ namespace Coursework.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.AnnouncementId = comment.AnnouncementId;
+            ViewBag.AnnouncementId = comment.Announcement.Id;
             return View(comment);
         }
 
@@ -62,9 +70,8 @@ namespace Coursework.Controllers
             if (ModelState.IsValid)
             {
                 var user = getUser();
-                comment.UserId = user.Id;
-                comment.UserName = user.UserName;
-                comment.AnnouncementId = aId;
+                comment.User = user;
+                comment.Announcement = db.Announcements.Find(aId);
                 db.Comments.Add(comment);
                 db.SaveChanges();
                 return RedirectToAction("Index", new { id = aId });
@@ -85,7 +92,7 @@ namespace Coursework.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.AnnouncementId = comment.AnnouncementId;
+            ViewBag.AnnouncementId = comment.Announcement.Id;
             return View(comment);
         }
 
@@ -99,9 +106,8 @@ namespace Coursework.Controllers
             if (ModelState.IsValid)
             {
                 var user = getUser();
-                comment.UserId = user.Id;
-                comment.UserName = user.UserName;
-                comment.AnnouncementId = aId;
+                comment.User = user;
+                comment.Announcement = db.Announcements.Find(aId);
                 db.Entry(comment).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index", new { id = aId });
@@ -121,7 +127,7 @@ namespace Coursework.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.AnnouncementId = comment.AnnouncementId;
+            ViewBag.AnnouncementId = comment.Announcement.Id;
             return View(comment);
         }
 

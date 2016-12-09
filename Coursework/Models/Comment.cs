@@ -8,15 +8,13 @@ namespace Coursework.Models
 {
     public class Comment
     {
-        public int Id { get; set; }
+        public virtual int Id { get; set; }
 
         [Required]
-        public string Content { get; set; }
+        public virtual string Content { get; set; }
 
-        public int AnnouncementId { get; set; }
-        
-        public string UserId { get; set; }
+        public virtual Announcement Announcement { get; set; }
 
-        public string UserName { get; set; }
+        public virtual ApplicationUser User { get; set; }
     }
 }
