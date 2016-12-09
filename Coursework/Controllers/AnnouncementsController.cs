@@ -14,7 +14,7 @@ namespace Coursework.Controllers
 {
     public class AnnouncementsController : Controller
     {
-       
+
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Announcements
@@ -22,10 +22,12 @@ namespace Coursework.Controllers
         {
             // Check if user is lecturer or student
             ViewBag.isLecturer = User.IsInRole("canModifyAnnouncements");
-            
+
             return View(db.Announcements.ToList());
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult GetAnnouncement(int announcementId)
         {
             // Check if user is lecturer or student

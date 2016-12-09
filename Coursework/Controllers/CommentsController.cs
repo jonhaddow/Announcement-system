@@ -28,12 +28,29 @@ namespace Coursework.Controllers
             return View(db.Comments.ToList().Where(x => x.Announcement.Id == id));
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult GetComments(int announcementId)
         {
             // Get list of comments associated with the given announcement id
             IEnumerable<Comment> listOfComments = db.Comments.ToList().Where(x => x.Announcement.Id == announcementId);
 
             return PartialView("_AnnouncementComments", listOfComments);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddComment(int announcementId, [Bind(Include = "Content")] Comment comment)
+        {
+            if (ModelState.IsValid)
+            {
+                comment.User = getUser();
+                comment.Announcement = db.Announcements.Find(announcementId);
+                db.Comments.Add(comment);
+                db.SaveChanges();
+                return GetComments(announcementId);
+            }
+            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         }
 
         // GET: Comments/Details/5

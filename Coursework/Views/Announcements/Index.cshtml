@@ -22,7 +22,7 @@
     @foreach (var item in Model)
     {
         <input hidden name="announcementId" value="@item.Id" />
-        <button id="@item.Id" class="announcement-link" type="submit">@item.Title</button>
+        <button id="@item.Id" class="announcement-link" onclick="getAnnouncement(this);" type="submit">@item.Title</button>
     }
 </div>
 
@@ -32,7 +32,17 @@
         Please select an announcement
     </div>
 
-    <div hidden id="displayComments" class="announcement-comments"></div>
+    <div hidden id="displayComments" class="announcement-comments">
+        <h3>Comments</h3>
+        <div id="comments"></div>
+        <form id="addCommentForm">
+            <div class="form-group">
+                <input id="newCommentContent" type="text" class="form-control" placeholder="Add a comment">
+                <small class="form-text text-muted">Press enter to submit comment.</small>
+                <input type="submit" hidden />
+            </div>
+        </form>
+    </div>
 </div>
 
 

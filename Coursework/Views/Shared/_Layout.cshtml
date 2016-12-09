@@ -29,6 +29,7 @@
     <div class="container body-content">
         @RenderBody()
     </div>
+    <form id="ajaxAntiForgeryForm"method="post">@Html.AntiForgeryToken()></form>
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
