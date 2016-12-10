@@ -1,0 +1,34 @@
+﻿@model Coursework.Models.Announcement
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "editForm" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="announcement-heading">
+        @Html.HiddenFor(model => model.Id)
+
+        <div id="headerLine">
+            <i id="arrowBack" class="material-icons">arrow_back</i>
+            <h2>Edit Announcement</h2>
+        </div>
+        <div class="title-info">
+            @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="form-group">
+                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control titleEdit" } })
+                @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Content, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.EditorFor(model => model.Content, new { htmlAttributes = new { @class = "form-control contentTextArea" } })
+        @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
+    </div>
+        <button id="updateAnnouncementButton" class="btn btn-primary" type="submit">
+            Update
+        </button>
+
+}
+<script src="~/CustomScripts/EditAnnouncement.js"></script>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

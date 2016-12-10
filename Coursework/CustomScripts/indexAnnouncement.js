@@ -24,8 +24,7 @@ function getAnnouncement(button) {
     id = $(button).attr("id");
     $.ajax({
         url: "/Announcements/GetAnnouncement",
-        type: "POST",
-        data: addAntiForgeryToken({ announcementId: id }),
+        data: { announcementId: id },
     }).done(function (result) {
         $("#displayAnnouncement").html(result);
     });
@@ -33,8 +32,7 @@ function getAnnouncement(button) {
     // The id is also used to get the comments for the announcement.
     $.ajax({
         url: "/Comments/GetComments",
-        type: "POST",
-        data: addAntiForgeryToken({ announcementId: id }),
+        data: { announcementId: id },
     }).done(function (result) {
         $("#displayComments").show();
         $("#comments").html(result);
@@ -56,5 +54,9 @@ $(function () {
             $("#newCommentContent").val("");
         });
         return false;
+    });
+
+    $("#editAnnouncementIcon").click(function () {
+        alert();
     });
 });

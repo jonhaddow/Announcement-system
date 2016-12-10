@@ -28,8 +28,6 @@ namespace Coursework.Controllers
             return View(db.Comments.ToList().Where(x => x.Announcement.Id == id));
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult GetComments(int announcementId)
         {
             // Get list of comments associated with the given announcement id

@@ -73,7 +73,8 @@
     width: 40%;
 }
 
-.delete-announcement-icon, .edit-announcement-icon {
+.delete-announcement-icon, .edit-icon {
+    cursor: pointer;
     float: right;
 }
 
@@ -108,4 +109,17 @@
     color: #666;
     background-color: white;
     margin: 30px 10px 30px 10px;
+}
+
+#headerLine > i {
+    cursor: pointer;
+    padding-top: 20px;
+    height: auto;
+    width: 10%;
+    float: left;
+}
+
+#headerLine > h2 {
+    width: 90%;
+    float: left;
 }

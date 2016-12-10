@@ -26,8 +26,6 @@ namespace Coursework.Controllers
             return View(db.Announcements.ToList());
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult GetAnnouncement(int announcementId)
         {
             // Check if user is lecturer or student
@@ -85,18 +83,18 @@ namespace Coursework.Controllers
 
         // GET: Announcements/Edit/5
         [Authorize(Roles = "canModifyAnnouncements")]
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(int? announcementId)
         {
-            if (id == null)
+            if (announcementId == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Announcement announcement = db.Announcements.Find(id);
+            Announcement announcement = db.Announcements.Find(announcementId);
             if (announcement == null)
             {
                 return HttpNotFound();
             }
-            return View(announcement);
+            return PartialView("_EditAnnouncement", announcement);
         }
 
         // POST: Announcements/Edit/5
@@ -113,7 +111,7 @@ namespace Coursework.Controllers
                 announcement.User = user;
                 db.Entry(announcement).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return GetAnnouncement(announcement.Id);
             }
             return View(announcement);
         }
