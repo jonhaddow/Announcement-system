@@ -1,57 +1,38 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using Coursework.Models;
-using System.Web.Security;
 using Microsoft.AspNet.Identity;
 
 namespace Coursework.Controllers
 {
     public class AnnouncementsController : Controller
     {
-
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: Announcements
         public ActionResult Index()
         {
-            // Check if user is lecturer or student
+            // Send info on the current user claims.
             ViewBag.isLecturer = User.IsInRole("canModifyAnnouncements");
 
+            // Send list of all the announcements
             return View(db.Announcements.ToList());
         }
 
+        // Method that gets an announcements details.
         public ActionResult GetAnnouncement(int announcementId)
         {
-            // Check if user is lecturer or student
+            // Send info on the current user claims.
             ViewBag.isLecturer = User.IsInRole("canModifyAnnouncements");
 
-            // Get announcement from id
+            // Get selected announcement from id.
             Announcement announcement = db.Announcements.Find(announcementId);
 
+            // Send back partial view showing selected announcement.
             return PartialView("_SelectedAnnouncement", announcement);
-        }
-
-        // GET: Announcements/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Announcement announcement = db.Announcements.Find(id);
-            if (announcement == null)
-            {
-                return HttpNotFound();
-            }
-
-            ViewBag.isLecturer = User.IsInRole("canModifyAnnouncements");
-            return View(announcement);
         }
 
         // GET: Announcements/Create
@@ -66,7 +47,7 @@ namespace Coursework.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles= "canModifyAnnouncements")]
+        [Authorize(Roles = "canModifyAnnouncements")]
         public ActionResult Create([Bind(Include = "Id,Title,Content")] Announcement announcement)
         {
             if (ModelState.IsValid)
@@ -115,33 +96,21 @@ namespace Coursework.Controllers
             }
             return View(announcement);
         }
-
-        // GET: Announcements/Delete/5
-        [Authorize(Roles = "canModifyAnnouncements")]
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Announcement announcement = db.Announcements.Find(id);
-            if (announcement == null)
-            {
-                return HttpNotFound();
-            }
-            return View(announcement);
-        }
-
+        
         // POST: Announcements/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "canModifyAnnouncements")]
-        public ActionResult DeleteConfirmed(int id)
+        public void Delete(int id)
         {
+            // Check if announcement has any comments. If so, delete them.
+            IEnumerable<Comment> comments = db.Comments.ToList().Where(c => c.Announcement.Id == id);
+            db.Comments.RemoveRange(comments);
+
+            // Delete announcement.
             Announcement announcement = db.Announcements.Find(id);
             db.Announcements.Remove(announcement);
             db.SaveChanges();
-            return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)

@@ -51,6 +51,7 @@
 
 .announcement-content {
     padding-top: 40px;
+    white-space: pre-wrap;
 }
 
 .outline {
@@ -64,13 +65,13 @@
 
 .title-info {
     float: left;
-    width: 60%;
+    width: 90%;
 }
 
 .modify-container {
     margin: 20px 0px 10px 0px;
     float: right;
-    width: 40%;
+    width: 10%;
 }
 
 .delete-announcement-icon, .edit-icon {
@@ -122,4 +123,38 @@
 #headerLine > h2 {
     width: 90%;
     float: left;
+}
+
+#deleteAnnouncementButton {
+    float: right;
+}
+
+.modify-comment {
+    float: right;
+    cursor: pointer;
+    width: 15%;
+}
+
+.delete-comment-icon {
+    color: red;
+}
+
+.comment-content {
+    width: 85%;
+    display: inline-block;
+    align-content: center;
+}
+
+.comment-author {
+    color: #999;
+    font-style: italic;
+}
+
+.comment-block {
+    width: 100%;
+    padding: 20px 0px 20px 0px;
+}
+
+.comment-separator {
+    margin: 0px;
 }

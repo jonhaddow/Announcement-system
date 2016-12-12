@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data;
-using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using Coursework.Models;
 using Microsoft.AspNet.Identity;
@@ -15,163 +12,89 @@ namespace Coursework.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: Comments
-        public ActionResult Index(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            ViewBag.AnnouncementId = id;
-            Announcement a = db.Announcements.Find(id);
-            ViewBag.AnnouncementTitle = a.Title;
-            return View(db.Comments.ToList().Where(x => x.Announcement.Id == id));
-        }
-
+        // This method gets a lists of comments attached to an announcement id.
         public ActionResult GetComments(int announcementId)
         {
             // Get list of comments associated with the given announcement id
-            IEnumerable<Comment> listOfComments = db.Comments.ToList().Where(x => x.Announcement.Id == announcementId);
+            IEnumerable<Comment> listOfComments =
+                db.Comments.ToList().Where(x => x.Announcement.Id == announcementId);
 
             return PartialView("_AnnouncementComments", listOfComments);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult AddComment(int announcementId, [Bind(Include = "Content")] Comment comment)
+        public ActionResult Create(int announcementId, [Bind(Include = "Content")] Comment comment)
         {
             if (ModelState.IsValid)
             {
+                // Attach current user and selected announcement to the comment.
                 comment.User = getUser();
                 comment.Announcement = db.Announcements.Find(announcementId);
+
+                // Add to database.
                 db.Comments.Add(comment);
                 db.SaveChanges();
+
+                // Return partial view of a list of comments.
                 return GetComments(announcementId);
             }
             return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         }
 
-        // GET: Comments/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Comment comment = db.Comments.Find(id);
-            if (comment == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.AnnouncementId = comment.Announcement.Id;
-            return View(comment);
-        }
-
-        // GET: Comments/Create/5
-        public ActionResult Create(int? id)
-        {
-            ViewBag.AnnouncementId = id;
-            return View();
-        }
-
-        // POST: Comments/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(int aId, [Bind(Include = "Id,Content")] Comment comment)
-        {
-
-            if (ModelState.IsValid)
-            {
-                var user = getUser();
-                comment.User = user;
-                comment.Announcement = db.Announcements.Find(aId);
-                db.Comments.Add(comment);
-                db.SaveChanges();
-                return RedirectToAction("Index", new { id = aId });
-            }
-
-            return View(comment);
-        }
-
-        // GET: Comments/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Comment comment = db.Comments.Find(id);
-            if (comment == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.AnnouncementId = comment.Announcement.Id;
-            return View(comment);
-        }
-
-        // POST: Comments/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int aId, [Bind(Include = "Id,Content")] Comment comment)
+        public ActionResult Edit(int announcementId, [Bind(Include = "Id,Content")] Comment inputComment)
         {
             if (ModelState.IsValid)
             {
-                var user = getUser();
-                comment.User = user;
-                comment.Announcement = db.Announcements.Find(aId);
-                db.Entry(comment).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index", new { id = aId });
+                // Get current comment from database using the comment Id.
+                Comment comment = db.Comments.Find(inputComment.Id);
+
+                // Check that comment belongs to the user.
+                ApplicationUser currentUser = getUser();
+                if (comment.User.Id == currentUser.Id)
+                {
+                    // Change only the content of the comment.
+                    comment.Content = inputComment.Content;
+                    db.SaveChanges();
+
+                    // Return partial view of the list of comments.
+                    return GetComments(announcementId);
+                }
+                else
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+                }
             }
-            return View(comment);
+            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         }
 
-        // GET: Comments/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Comment comment = db.Comments.Find(id);
-            if (comment == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.AnnouncementId = comment.Announcement.Id;
-            return View(comment);
-        }
-
-        // POST: Comments/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int aId, int id)
+        public ActionResult Delete(int id)
         {
+            // Get the comment to be deleted.
             Comment comment = db.Comments.Find(id);
+
+            // Take the announcement Id attached to the comment.
+            var announcementId = comment.Announcement.Id;
+
+            // Delete the comment.
             db.Comments.Remove(comment);
             db.SaveChanges();
-            return RedirectToAction("Index", new { id = aId });
+
+            // Return a partial view of all remaining the comments attached to this announcement.
+            return GetComments(announcementId);
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
+        // This method gets the current User making the request.
         private ApplicationUser getUser()
         {
-            // Get current user Id
+            // Get current userId.
             string currentUserId = User.Identity.GetUserId();
 
-            // Get user using user Id
+            // Get user.
             return db.Users.FirstOrDefault
                 (x => x.Id == currentUserId);
         }

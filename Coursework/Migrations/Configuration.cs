@@ -13,7 +13,9 @@ namespace Coursework.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
+            
         }
+
         //  This method will be called after migrating to the latest version.
         protected override void Seed(ApplicationDbContext context)
         {

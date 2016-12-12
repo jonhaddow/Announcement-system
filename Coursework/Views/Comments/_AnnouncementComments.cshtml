@@ -1,8 +1,36 @@
 ﻿@model IEnumerable<Coursework.Models.Comment>
+@using Microsoft.AspNet.Identity;
 
-@foreach (var comment in Model)
-{
-    <div id="@comment.Id">
-        @comment.Content - @comment.User.UserName
+<h3>Comments</h3>
+<div id="comments">
+    @foreach (var comment in Model)
+    {
+        <hr class="comment-separator" />
+        <div class="comment-block">
+            <div id="@comment.Id" class="comment-content">
+                <div>@comment.Content</div>
+                <span class="comment-author">
+                    - @comment.User.UserName
+                </span>
+            </div>
+
+            <div hidden class="modify-comment">
+                @if (comment.User.Id == User.Identity.GetUserId())
+                {
+                    <i class="material-icons edit-comment-icon">edit</i>
+                    <i class="material-icons delete-comment-icon">delete</i>
+                }
+            </div>
+        </div>
+    }
+</div>
+<form id="addCommentForm">
+    <div class="form-group">
+        <input id="newCommentContent" type="text" class="form-control" placeholder="Add a comment">
+        <small class="form-text text-muted">Press enter to submit comment.</small>
+        <input type="submit" hidden />
     </div>
-}
+</form>
+
+<script src="~/Scripts/bootbox.min.js"></script>
+<script src="~/CustomScripts/AnnouncementComments.js"></script>

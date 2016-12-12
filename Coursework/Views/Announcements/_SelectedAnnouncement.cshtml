@@ -10,16 +10,10 @@
     @if (ViewBag.isLecturer)
     {
         <div class="modify-container">
-            <a class="delete-announcement-icon" href="@Url.Action("Delete", new { Model.Id })">
-                <i class="material-icons">delete</i>
-            </a>
             <i id="editAnnouncementIcon" class="material-icons edit-icon">edit</i>
-
         </div>
     }
 </div>
-<div class=announcement-content>
-    @Html.DisplayFor(a => a.Content)
-</div>
+<div class=announcement-content>@Html.DisplayFor(a => a.Content)</div>
 
 <script src="~/CustomScripts/SelectedAnnouncement.js"></script>

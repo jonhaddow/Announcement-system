@@ -234,6 +234,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\ring.svg" />
+    <Content Include="CustomScripts\AnnouncementComments.js" />
     <Content Include="CustomScripts\SelectedAnnouncement.js" />
     <Content Include="CustomScripts\EditAnnouncement.js" />
     <Content Include="CustomScripts\IndexAnnouncement.js" />
@@ -304,11 +305,6 @@
     <Content Include="Views\Announcements\Details.cshtml" />
     <Content Include="Views\Announcements\_EditAnnouncement.cshtml" />
     <Content Include="Views\Announcements\Index.cshtml" />
-    <Content Include="Views\Comments\Create.cshtml" />
-    <Content Include="Views\Comments\Delete.cshtml" />
-    <Content Include="Views\Comments\Details.cshtml" />
-    <Content Include="Views\Comments\Edit.cshtml" />
-    <Content Include="Views\Comments\Index.cshtml" />
     <Content Include="Views\Announcements\_SelectedAnnouncement.cshtml" />
     <Content Include="Views\Comments\_AnnouncementComments.cshtml" />
   </ItemGroup>

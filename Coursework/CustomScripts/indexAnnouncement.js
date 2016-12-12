@@ -34,29 +34,6 @@ function getAnnouncement(button) {
         url: "/Comments/GetComments",
         data: { announcementId: id },
     }).done(function (result) {
-        $("#displayComments").show();
-        $("#comments").html(result);
+        $("#displayComments").show().html(result);
     });
 };
-
-$(function () {
-    // Add listener to check for form submission.
-    $("#addCommentForm").submit(function (e) {
-        $.ajax({
-            url: "/Comments/AddComment",
-            type: "POST",
-            data: addAntiForgeryToken({
-                announcementId: id,
-                Content: $("#newCommentContent").val()
-            }),
-        }).done(function (result) {
-            $("#comments").html(result);
-            $("#newCommentContent").val("");
-        });
-        return false;
-    });
-
-    $("#editAnnouncementIcon").click(function () {
-        alert();
-    });
-});
