@@ -12,37 +12,33 @@
     <h2>@ViewBag.Title</h2>
     @if (ViewBag.isLecturer)
     {
-        <div class="create-announcement-link">
-            <p>
-                @Html.ActionLink("Create New", "Create", "", new { @class = "create-announcement-link" })
-            </p>
+        <div class="create-announcement-link" id="createAnnouncementLink">
+            Create New
         </div>
     }
 
     @foreach (var item in Model)
     {
-        <input hidden name="announcementId" value="@item.Id" />
-        <button id="@item.Id" class="announcement-link" onclick="getAnnouncement(this);" type="submit">@item.Title</button>
+        using (Ajax.BeginForm("GetAnnouncement", "Announcements", "", new AjaxOptions
+        {
+            InsertionMode = InsertionMode.Replace,
+            HttpMethod = "POST",
+            UpdateTargetId = "selectedAnnouncement",
+            LoadingElementId = "loadingSpinner"
+        }, new { id = "addCommentForm" }))
+        {
+            <input hidden name="announcementId" value="@item.Id" />
+            <button id="@item.Id" class="announcement-link" onclick="getAnnouncement(this);" type="submit">@item.Content<i class="material-icons">keyboard_arrow_right</i></button>
+        }
     }
 </div>
 
-<div class="outline col-sm-8">
-
-    <div id="displayAnnouncement" class="selected-announcement">
-        Please select an announcement
-    </div>
-
-    <div hidden id="displayComments" class="announcement-comments">
-        
-    </div>
-</div>
-
+<div id="selectedAnnouncement" class="outline col-sm-8"></div>
 
 @section Styles {
     <link href="@Url.Content("~/Content/announcements.css")" rel="stylesheet" type="text/css" />
 }
 @section Scripts {
     <script src="~/CustomScripts/indexAnnouncement.js"></script>
-    @Scripts.Render("~/bundles/jqueryval")
-    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <script src="~/Scripts/sweetalert.min.js"></script>
 }

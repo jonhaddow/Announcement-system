@@ -10,7 +10,9 @@ namespace Coursework.Models
     {
         public virtual int Id { get; set; }
 
-        [Required]
+        [Required (ErrorMessage = "A comment can't be empty.")]
+        [StringLength(1000, ErrorMessage = "A comment can't be more than 1000 characters long.")]
+        [DataType(DataType.MultilineText)]
         public virtual string Content { get; set; }
 
         public virtual Announcement Announcement { get; set; }

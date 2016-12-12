@@ -1,20 +1,5 @@
 ﻿$(function () {
-    // Add listener to check for form submission.
-    $("#addCommentForm").submit(function (e) {
-        $.ajax({
-            url: "/Comments/Create",
-            type: "POST",
-            data: addAntiForgeryToken({
-                announcementId: id,
-                Content: $("#newCommentContent").val()
-            }),
-        }).done(function (result) {
-            $("#displayComments").html(result);
-            $("#newCommentContent").val("");
-        });
-        return false;
-    });
-
+    
     // Show delete icon on hover
     $(".comment-block").hover(
         function () {
@@ -27,26 +12,37 @@
     //Edit comment on icon click
     $(".edit-comment-icon").click(function () {
         var commentId = $(this).parent().parent().closest("div").children(".comment-content").attr("id");
-        bootbox.prompt({
-            size: "small",
-            title: "Edit comment:",
-            value: $("#" + commentId).children("div").text(),
-            callback: function (result) {
-                if (result != null && result != "") {
-                    $.ajax({
-                        url: "/Comments/Edit",
-                        type: "POST",
-                        data: addAntiForgeryToken({
-                            announcementId: id,
-                            Id: commentId,
-                            Content: result
-                        })
-                    }).done(function (result) {
-                        $("#displayComments").html(result);
-                    });
-                }
+        swal({
+            title: "Edit Comment",
+            type: "input",
+            showCancelButton: true,
+            closeOnConfirm: false,
+            inputValue: $("#" + commentId).children("div").text()
+        }, function (inputValue) {
+            if (inputValue === false) return false;
+            if (inputValue === "") {
+                swal.showInputError("You need to write something!");
+                return false
             }
+            $.ajax({
+                url: "/Comments/Edit",
+                type: "POST",
+                data: addAntiForgeryToken({
+                    announcementId: id,
+                    Id: commentId,
+                    Content: inputValue
+                })
+            }).done(function (result) {
+                swal({
+                    title: "Submitted!",
+                    timer: 1200,
+                    type: "success",
+                    showConfirmButton: false
+                });
+                $("#displayComments").html(result);
+            });
         });
+        
     });
 
     //Delete comment on icon click

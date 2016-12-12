@@ -4,14 +4,11 @@ using System.Linq;
 using System.Net;
 using System.Web.Mvc;
 using Coursework.Models;
-using Microsoft.AspNet.Identity;
 
 namespace Coursework.Controllers
 {
-    public class CommentsController : Controller
+    public class CommentsController : BaseController
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
-
         // This method gets a lists of comments attached to an announcement id.
         public ActionResult GetComments(int announcementId)
         {
@@ -20,6 +17,11 @@ namespace Coursework.Controllers
                 db.Comments.ToList().Where(x => x.Announcement.Id == announcementId);
 
             return PartialView("_AnnouncementComments", listOfComments);
+        }
+
+        public ActionResult CreateView()
+        {
+            return PartialView("_CreateComment");
         }
 
         [HttpPost]
@@ -86,17 +88,6 @@ namespace Coursework.Controllers
 
             // Return a partial view of all remaining the comments attached to this announcement.
             return GetComments(announcementId);
-        }
-
-        // This method gets the current User making the request.
-        private ApplicationUser getUser()
-        {
-            // Get current userId.
-            string currentUserId = User.Identity.GetUserId();
-
-            // Get user.
-            return db.Users.FirstOrDefault
-                (x => x.Id == currentUserId);
         }
     }
 }

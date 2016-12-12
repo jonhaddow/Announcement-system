@@ -9,10 +9,8 @@ using Microsoft.AspNet.Identity;
 
 namespace Coursework.Controllers
 {
-    public class AnnouncementsController : Controller
+    public class AnnouncementsController : BaseController
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
-
         public ActionResult Index()
         {
             // Send info on the current user claims.
@@ -23,6 +21,7 @@ namespace Coursework.Controllers
         }
 
         // Method that gets an announcements details.
+        [HttpPost]
         public ActionResult GetAnnouncement(int announcementId)
         {
             // Send info on the current user claims.
@@ -34,70 +33,68 @@ namespace Coursework.Controllers
             // Send back partial view showing selected announcement.
             return PartialView("_SelectedAnnouncement", announcement);
         }
-
-        // GET: Announcements/Create
+        
         [Authorize(Roles = "canModifyAnnouncements")]
         public ActionResult Create()
         {
-            return View();
+            return PartialView("_CreateAnnouncement");
         }
 
-        // POST: Announcements/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "canModifyAnnouncements")]
-        public ActionResult Create([Bind(Include = "Id,Title,Content")] Announcement announcement)
+        public void Create([Bind(Include = "Title,Content,Important")] Announcement announcement)
         {
             if (ModelState.IsValid)
             {
-                ApplicationUser user = getUser();
-                announcement.User = user;
+                // Attach current user to the announcement.
+                announcement.User = getUser();
+
+                // Save to database.
                 db.Announcements.Add(announcement);
                 db.SaveChanges();
-                return RedirectToAction("Index");
             }
-
-            return View(announcement);
         }
-
-        // GET: Announcements/Edit/5
+        
         [Authorize(Roles = "canModifyAnnouncements")]
         public ActionResult Edit(int? announcementId)
         {
+            // Check that id is sent in URL
             if (announcementId == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
+            // Check that id gives a valid announcement.
             Announcement announcement = db.Announcements.Find(announcementId);
             if (announcement == null)
             {
                 return HttpNotFound();
             }
+
             return PartialView("_EditAnnouncement", announcement);
         }
-
-        // POST: Announcements/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "canModifyAnnouncements")]
-        public ActionResult Edit([Bind(Include = "Id,Title,Content")] Announcement announcement)
+        public ActionResult Edit([Bind(Include = "Id,Title,Content,Important")] Announcement announcement)
         {
             if (ModelState.IsValid)
             {
-                ApplicationUser user = getUser();
-                announcement.User = user;
+                // Attach user to announcement.
+                announcement.User = getUser();
+
+                // Save new announcement to database
                 db.Entry(announcement).State = EntityState.Modified;
                 db.SaveChanges();
+                
+                // Return back to announcement page.
                 return GetAnnouncement(announcement.Id);
             }
-            return View(announcement);
+            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         }
-        
-        // POST: Announcements/Delete/5
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "canModifyAnnouncements")]
@@ -111,25 +108,6 @@ namespace Coursework.Controllers
             Announcement announcement = db.Announcements.Find(id);
             db.Announcements.Remove(announcement);
             db.SaveChanges();
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
-        private ApplicationUser getUser()
-        {
-            // Get current user Id
-            string currentUserId = User.Identity.GetUserId();
-
-            // Get user using user Id
-            return db.Users.FirstOrDefault
-                (x => x.Id == currentUserId);
         }
     }
 }

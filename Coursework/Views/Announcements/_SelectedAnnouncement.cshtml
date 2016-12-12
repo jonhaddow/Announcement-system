@@ -1,19 +1,31 @@
 ﻿@model Coursework.Models.Announcement
 
-<div class="announcement-heading">
-    <div class="title-info">
-        <h2>@Html.DisplayFor(a => a.Title)</h2>
-        <span class="author">
-            - @Html.DisplayFor(a => a.User.UserName)
-        </span>
-    </div>
-    @if (ViewBag.isLecturer)
-    {
-        <div class="modify-container">
-            <i id="editAnnouncementIcon" class="material-icons edit-icon">edit</i>
+<div hidden id="selectedAnnouncementId">@Model.Id</div>
+
+<div id="displayAnnouncement" class="selected-announcement">
+    <div class="announcement-heading">
+        <div class="title-info">
+            <h2>@Html.DisplayFor(a => a.Title)</h2>
+            <span class="author">
+                - @Html.DisplayFor(a => a.User.UserName)
+            </span>
         </div>
-    }
+        @if (ViewBag.isLecturer)
+        {
+            <div class="modify-container">
+                <i id="editAnnouncementIcon" class="material-icons edit-icon">edit</i>
+            </div>
+        }
+    </div>
+    <div class=announcement-content>@Html.DisplayFor(a => a.Content)</div>
 </div>
-<div class=announcement-content>@Html.DisplayFor(a => a.Content)</div>
+
+<div id="displayComments" class="announcement-comments">
+    <h3 class="comments-heading">Comments</h3>
+    <div id="comments">@Html.Action("GetComments", "Comments", Model.Id)</div>
+    <div id="addComment">
+        @Html.Action("CreateView", "Comments")
+    </div>
+</div>
 
 <script src="~/CustomScripts/SelectedAnnouncement.js"></script>
