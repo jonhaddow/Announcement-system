@@ -215,6 +215,6 @@ a:visited, a:hover, a:active {
     
 
     outline: none !important;
-    border:2px solid #74f77f;
+    border:1px solid #74f77f;
     box-shadow: 0 0 10px #719ECE;
 }

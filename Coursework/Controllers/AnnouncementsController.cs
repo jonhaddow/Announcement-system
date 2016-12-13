@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Web.Mvc;
 using Coursework.Models;
+using Microsoft.AspNet.Identity;
 
 namespace Coursework.Controllers
 {
@@ -23,13 +24,42 @@ namespace Coursework.Controllers
         public ActionResult GetAnnouncement(int announcementId)
         {
             // Send info on the current user claims.
-            ViewBag.isLecturer = User.IsInRole("canModifyAnnouncements");
+            bool isLecturer = User.IsInRole("canModifyAnnouncements");
 
             // Get selected announcement from id.
             Announcement announcement = db.Announcements.Find(announcementId);
 
+            // If the user is a student
+            if (!isLecturer)
+            {
+                // Check if User has seen the announcement
+                IEnumerable<HasSeen> existingRows = db.HasSeens.ToList()
+                    .Where(row => row.Announcement.Id == announcement.Id
+                    && row.User.Id == User.Identity.GetUserId());
+
+                // If no row exists
+                if (existingRows.Count() == 0)
+                {
+                    // Add row to database
+                    HasSeen prepareObj =  new HasSeen();
+                    prepareObj.Announcement = announcement;
+                    prepareObj.User = getUser();
+                    db.HasSeens.Add(prepareObj);
+                    db.SaveChanges();
+                }
+            }
+
+
+
+            ViewBag.isLecturer = isLecturer;
+
             // Send back partial view showing selected announcement.
             return PartialView("_SelectedAnnouncement", announcement);
+        }
+
+        public string GetStudentsSeen(int announcement)
+        {
+            return "";
         }
 
         [Authorize(Roles = "canModifyAnnouncements")]
@@ -104,6 +134,10 @@ namespace Coursework.Controllers
             // Check if announcement has any comments. If so, delete them.
             IEnumerable<Comment> comments = db.Comments.ToList().Where(c => c.Announcement.Id == id);
             db.Comments.RemoveRange(comments);
+
+            // Check if announcement has any student views. If so, delete them.
+            IEnumerable<HasSeen> hasSeens = db.HasSeens.ToList().Where(c => c.Announcement.Id == id);
+            db.HasSeens.RemoveRange(hasSeens);
 
             // Delete announcement.
             Announcement announcement = db.Announcements.Find(id);

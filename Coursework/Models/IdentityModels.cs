@@ -1,5 +1,4 @@
-﻿using System.Data.Entity;
-using System.Security.Claims;
+﻿using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -33,5 +32,7 @@ namespace Coursework.Models
         public System.Data.Entity.DbSet<Coursework.Models.Announcement> Announcements { get; set; }
 
         public System.Data.Entity.DbSet<Coursework.Models.Comment> Comments { get; set; }
+
+        public System.Data.Entity.DbSet<Coursework.Models.HasSeen> HasSeens { get; set; }
     }
 }
