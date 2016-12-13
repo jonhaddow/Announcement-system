@@ -1,13 +1,11 @@
 ﻿@model IEnumerable<Coursework.Models.Comment>
 @using Microsoft.AspNet.Identity;
 
-
-
 @foreach (var comment in Model)
-            {
+{
     <hr class="comment-separator" />
-    <div class="comment-block">
-        <div id="@comment.Id" class="comment-content">
+    <div id="@comment.Id" class="comment-block">
+        <div class="comment-content">
             <div>@comment.Content</div>
             <span class="comment-author">
                 - @comment.User.UserName
@@ -16,9 +14,15 @@
 
         <div hidden class="modify-comment">
             @if (comment.User.Id == User.Identity.GetUserId())
-                {
-                <i class="material-icons edit-comment-icon">edit</i>
-                            <i class="material-icons delete-comment-icon">delete</i>
+            {
+                @Ajax.ActionLink("edit", "EditView", "Comments", new { commentId = comment.Id }, new AjaxOptions
+           {
+               HttpMethod = "Get",
+               InsertionMode = InsertionMode.Replace,
+               LoadingElementId = "loadingSpinner",
+               UpdateTargetId = comment.Id.ToString()
+           }, new { @class = "material-icons edit-comment-icon" })
+                <i id="deleteCommentButton" class="material-icons delete-comment-icon" onclick="deleteComment('@comment.Id')">delete</i>
             }
         </div>
     </div>

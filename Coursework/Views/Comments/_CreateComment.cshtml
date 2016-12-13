@@ -4,20 +4,20 @@
 {
     InsertionMode = InsertionMode.Replace,
     HttpMethod = "POST",
-    UpdateTargetId = "comments"
+    UpdateTargetId = "comments",
+    OnSuccess = "afterCreateComment()"
 }, new { id = "addCommentForm" }))
 {
     @Html.AntiForgeryToken()
-
+    @Html.Hidden("announcementId", (Object)ViewBag.announcementId);
     <div class="form-horizontal">
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
-            @Html.EditorFor(model => model.Content, new { htmlAttributes = new { id = "newCommentContent", @class = "form-control", placeholder = "Add Comment" } })
+            @Html.EditorFor(model => model.Content, new { htmlAttributes = new { id = "newCommentContent", @class = "form-control adding", placeholder = "Add Comment" } })
             @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
         </div>
-
         <div class="form-group">
-            <input type="submit" value="Submit" class="btn btn-default" />
+            <input id="submitNewComment" type="submit" value="Submit" class="btn btn-primary" />
         </div>
     </div>
 }

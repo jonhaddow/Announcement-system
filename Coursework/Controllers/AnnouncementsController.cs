@@ -5,7 +5,6 @@ using System.Linq;
 using System.Net;
 using System.Web.Mvc;
 using Coursework.Models;
-using Microsoft.AspNet.Identity;
 
 namespace Coursework.Controllers
 {
@@ -21,7 +20,6 @@ namespace Coursework.Controllers
         }
 
         // Method that gets an announcements details.
-        [HttpPost]
         public ActionResult GetAnnouncement(int announcementId)
         {
             // Send info on the current user claims.
@@ -33,7 +31,7 @@ namespace Coursework.Controllers
             // Send back partial view showing selected announcement.
             return PartialView("_SelectedAnnouncement", announcement);
         }
-        
+
         [Authorize(Roles = "canModifyAnnouncements")]
         public ActionResult Create()
         {
@@ -43,7 +41,7 @@ namespace Coursework.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "canModifyAnnouncements")]
-        public void Create([Bind(Include = "Title,Content,Important")] Announcement announcement)
+        public ActionResult Create([Bind(Include = "Title,Content,Important")] Announcement announcement)
         {
             if (ModelState.IsValid)
             {
@@ -53,9 +51,12 @@ namespace Coursework.Controllers
                 // Save to database.
                 db.Announcements.Add(announcement);
                 db.SaveChanges();
+
+                return RedirectToAction("Index", "Announcements");
             }
+            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         }
-        
+
         [Authorize(Roles = "canModifyAnnouncements")]
         public ActionResult Edit(int? announcementId)
         {
@@ -74,7 +75,7 @@ namespace Coursework.Controllers
 
             return PartialView("_EditAnnouncement", announcement);
         }
-        
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "canModifyAnnouncements")]
@@ -88,9 +89,9 @@ namespace Coursework.Controllers
                 // Save new announcement to database
                 db.Entry(announcement).State = EntityState.Modified;
                 db.SaveChanges();
-                
+
                 // Return back to announcement page.
-                return GetAnnouncement(announcement.Id);
+               return  RedirectToAction("Index","Announcements");
             }
             return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         }

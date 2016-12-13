@@ -239,6 +239,7 @@
     <Content Include="CustomScripts\AnnouncementComments.js" />
     <Content Include="CustomScripts\CreateAnnouncement.js" />
     <Content Include="CustomScripts\CreateComment.js" />
+    <Content Include="CustomScripts\EditComment.js" />
     <Content Include="CustomScripts\SelectedAnnouncement.js" />
     <Content Include="CustomScripts\EditAnnouncement.js" />
     <Content Include="CustomScripts\IndexAnnouncement.js" />
@@ -311,6 +312,7 @@
     <Content Include="Views\Comments\_AnnouncementComments.cshtml" />
     <Content Include="Views\Announcements\_CreateAnnouncement.cshtml" />
     <Content Include="Views\Comments\_CreateComment.cshtml" />
+    <Content Include="Views\Comments\_EditComment.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

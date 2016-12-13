@@ -19,8 +19,9 @@ namespace Coursework.Controllers
             return PartialView("_AnnouncementComments", listOfComments);
         }
 
-        public ActionResult CreateView()
+        public ActionResult CreateView(int announcementId)
         {
+            ViewBag.announcementId = announcementId;
             return PartialView("_CreateComment");
         }
 
@@ -42,6 +43,23 @@ namespace Coursework.Controllers
                 return GetComments(announcementId);
             }
             return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        }
+
+        public ActionResult EditView(int? commentId)
+        {
+            // Check that id is sent in URL
+            if (commentId == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            // Check that id gives a valid announcement.
+            Comment comment = db.Comments.Find(commentId);
+            if (comment == null)
+            {
+                return HttpNotFound();
+            }
+            return PartialView("_EditComment", comment);
         }
 
         [HttpPost]

@@ -4,7 +4,7 @@
     ViewBag.Title = "Announcements";
 }
 
-<div id="loadingSpinner">
+<div hidden id="loadingSpinner">
     <img src="~/Content/ring.svg" />
 </div>
 
@@ -12,11 +12,15 @@
     <h2>@ViewBag.Title</h2>
     @if (ViewBag.isLecturer)
     {
-        <div class="create-announcement-link" id="createAnnouncementLink">
-            Create New
-        </div>
+        @Ajax.ActionLink("Create New",
+       "Create", "", new AjaxOptions
+       {
+           UpdateTargetId = "selectedAnnouncement",
+           InsertionMode = InsertionMode.Replace,
+           HttpMethod = "GET",
+           LoadingElementId = "loadingSpinner"
+       }, new { @class = "create-announcement-link" })
     }
-
     @foreach (var item in Model)
     {
         using (Ajax.BeginForm("GetAnnouncement", "Announcements", "", new AjaxOptions
@@ -25,10 +29,14 @@
             HttpMethod = "POST",
             UpdateTargetId = "selectedAnnouncement",
             LoadingElementId = "loadingSpinner"
-        }, new { id = "addCommentForm" }))
+        }, new { id = "announcementButton" }))
         {
-            <input hidden name="announcementId" value="@item.Id" />
-            <button id="@item.Id" class="announcement-link" onclick="getAnnouncement(this);" type="submit">@item.Content<i class="material-icons">keyboard_arrow_right</i></button>
+            @Html.Hidden("announcementId", item.Id)
+            <button class="announcement-link" type="submit">
+                @if (item.Important)
+                { <span class="important">!</span> }
+                @item.Title
+            </button>
         }
     }
 </div>
@@ -41,4 +49,5 @@
 @section Scripts {
     <script src="~/CustomScripts/indexAnnouncement.js"></script>
     <script src="~/Scripts/sweetalert.min.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
 }

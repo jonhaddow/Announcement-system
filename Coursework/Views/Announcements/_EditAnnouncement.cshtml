@@ -1,13 +1,19 @@
 ﻿@model Coursework.Models.Announcement
 
-@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "editForm" }))
+@using (Html.BeginForm("Edit", "Announcements", "", FormMethod.Post, new { id = "editAnnouncementForm" }))
 {
     @Html.AntiForgeryToken()
     <div class="announcement-heading">
-        @Html.HiddenFor(model => model.Id)
+        @Html.HiddenFor(model => model.Id, new { id = "announcementId" })
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div id="headerLine">
-            <i id="arrowBack" class="material-icons">arrow_back</i>
+            @Ajax.ActionLink("arrow_back", "GetAnnouncement", "Announcements", new { announcementId = Model.Id }, new AjaxOptions
+       {
+           HttpMethod = "GET",
+           InsertionMode = InsertionMode.Replace,
+           LoadingElementId = "loadingSpinner",
+           UpdateTargetId = "selectedAnnouncement"
+       }, new { @class = "material-icons return-to-announcement" })
             <h2>Edit Announcement</h2>
         </div>
         <div class="title-info form-group">
