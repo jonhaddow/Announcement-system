@@ -10,6 +10,7 @@ using System.Web.Security;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Web;
 using Microsoft.AspNet.Identity.Owin;
+using System;
 
 namespace Coursework.Controllers
 {
@@ -74,14 +75,11 @@ namespace Coursework.Controllers
 
             var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(db));
 
-
             // Get a list of all students on the system.
             IEnumerable<ApplicationUser> allUsers = db.Users.ToList();
             List<ApplicationUser> allStudents = new List<ApplicationUser>();
             foreach (ApplicationUser user in allUsers)
             {
-
-              
                 ApplicationUserManager UserManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
                 var roles = UserManager.GetRoles(user.Id); 
                 if (!roles.Contains("canModifyAnnouncements"))
@@ -89,6 +87,8 @@ namespace Coursework.Controllers
                     allStudents.Add(user);
                 }
             }
+
+            ViewBag.Percentage = Math.Round(100f * ((float)studentsSeen.Count() / (float)allStudents.Count()));
 
             // Set up model to give to view. 
             //(model holds a 2 lists: Students who've viewed, and students who haven't)

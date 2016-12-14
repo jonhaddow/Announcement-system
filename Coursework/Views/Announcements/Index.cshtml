@@ -33,9 +33,11 @@
         {
             @Html.Hidden("announcementId", item.Id)
             <button class="announcement-link" type="submit">
+                <div>
+                    @item.Title
+                </div>
                 @if (item.Important)
                 { <span class="important">!</span> }
-                @item.Title
             </button>
         }
     }

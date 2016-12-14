@@ -22,11 +22,16 @@ a:visited, a:hover, a:active {
     color: inherit;
     text-decoration: none;
 }
+.announcement-link > div {
+        width: 80%;
+        float:left;
+}
 
 .announcement-link {
     padding: 20px 10px 20px 10px;
     height: auto;
     text-align: center;
+    font-size: 16pt;
     overflow: visible;
     width: 100%;
     border: none;
@@ -46,6 +51,10 @@ a:visited, a:hover, a:active {
 .important {
     color: red;
     font-size: 20pt;
+    float: left;
+    margin-left: 10%;
+    width: 10%;
+
 }
 
 .selected {
@@ -61,6 +70,7 @@ a:visited, a:hover, a:active {
     color: #666;
     background-color: white;
     margin: 30px 10px 30px 10px;
+    overflow: hidden;
 }
 
 .announcement-content {
@@ -80,20 +90,21 @@ a:visited, a:hover, a:active {
 
 .title-info {
     float: left;
-    width: 90%;
+    width: 80%;
     word-wrap: break-word;
 }
 
 .modify-container {
     margin: 20px 0px 10px 0px;
     float: right;
-    width: 10%;
+    width: 20%;
 }
 
-.delete-announcement-icon, .edit-icon {
+.delete-announcement-icon, .edit-icon, .get-students-seen-icon {
     cursor: pointer;
     float: right;
 }
+
 
 .delete-announcement-icon {
     padding-left: 10px;
@@ -201,20 +212,49 @@ a:visited, a:hover, a:active {
 
 .editing {
     outline: none !important;
-    border:1px solid #aabad9;
+    border: 1px solid #aabad9;
     box-shadow: 0 0 10px #719ECE;
 }
-.editing:focus {
 
-    outline: none !important;
-    border:1px solid #aabad9;
-    box-shadow: 0 0 10px #719ECE;
-}
+    .editing:focus {
+        outline: none !important;
+        border: 1px solid #aabad9;
+        box-shadow: 0 0 10px #719ECE;
+    }
 
 .adding {
-    
-
     outline: none !important;
-    border:1px solid #74f77f;
+    border: 1px solid #74f77f;
     box-shadow: 0 0 10px #719ECE;
+}
+
+.not-seen-table, .seen-table {
+    float: left;
+    width: 50%;
+}
+
+.table .student-name, .table .table-header {
+    border: none; 
+}
+.not-seen {
+    color:red;
+}
+
+.table .table-header {
+    border-bottom: solid 1px grey;
+}
+
+
+.clear {
+    clear: both;
+}
+
+.view-title {
+    font-style: italic;
+    padding-left: 40px;
+}
+
+
+.percentage {
+    color: grey;
 }
