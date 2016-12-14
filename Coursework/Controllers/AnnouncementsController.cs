@@ -7,6 +7,9 @@ using System.Web.Mvc;
 using Coursework.Models;
 using Microsoft.AspNet.Identity;
 using System.Web.Security;
+using Microsoft.AspNet.Identity.EntityFramework;
+using System.Web;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace Coursework.Controllers
 {
@@ -58,6 +61,7 @@ namespace Coursework.Controllers
             return PartialView("_SelectedAnnouncement", announcement);
         }
 
+        [Authorize(Roles = "canModifyAnnouncements")]
         public ActionResult GetStudentsSeen(int announcementId)
         {
             // Get a list of all users that have seen the announcement.
@@ -68,12 +72,19 @@ namespace Coursework.Controllers
                 studentsSeen.Add(hasSeen.User);
             }
 
+            var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(db));
+
+
             // Get a list of all students on the system.
             IEnumerable<ApplicationUser> allUsers = db.Users.ToList();
             List<ApplicationUser> allStudents = new List<ApplicationUser>();
             foreach (ApplicationUser user in allUsers)
             {
-                if (!Roles.IsUserInRole(user.UserName, "canModifyAnnouncements"))
+
+              
+                ApplicationUserManager UserManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+                var roles = UserManager.GetRoles(user.Id); 
+                if (!roles.Contains("canModifyAnnouncements"))
                 {
                     allStudents.Add(user);
                 }
@@ -85,6 +96,7 @@ namespace Coursework.Controllers
             hasSeenViewModel.Seen = studentsSeen;
             // Get all students except those who have seen the announcement.
             hasSeenViewModel.NotSeen = allStudents.Except(studentsSeen);
+            hasSeenViewModel.Announcement = db.Announcements.Find(announcementId);
             return PartialView("_HasSeenAnnouncement", hasSeenViewModel);
         }
 

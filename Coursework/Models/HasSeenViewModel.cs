@@ -4,6 +4,8 @@ namespace Coursework.Models
 {
     public class HasSeenViewModel
     {
+        public Announcement Announcement { get; set; }
+
         public IEnumerable<ApplicationUser> Seen { get; set; }
 
         public IEnumerable<ApplicationUser> NotSeen { get; set; }

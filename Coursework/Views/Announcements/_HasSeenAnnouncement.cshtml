@@ -1,20 +1,21 @@
-﻿@model IEnumerable<Coursework.Models.HasSeenViewModel>
+﻿@model Coursework.Models.HasSeenViewModel
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+@Ajax.ActionLink("arrow_back", "GetAnnouncement", "Announcements", new { announcementId = Model.Announcement.Id }, new AjaxOptions
+{ 
+    HttpMethod = "GET",
+    InsertionMode = InsertionMode.Replace,
+    LoadingElementId = "loadingSpinner",
+    UpdateTargetId = "selectedAnnouncement"
+}, new { @class = "material-icons return-to-announcement" })
+<h2>Edit Announcement</h2>
 <table class="table">
     <tr>
-        <th></th>
+        <th>@Html.DisplayNameFor(model=>model.Seen)</th>
     </tr>
 
-@foreach (var item in Model) {
+@foreach (var item in Model.Seen) {
     <tr>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-        </td>
+        <td>@item.UserName</td>
     </tr>
 }
 

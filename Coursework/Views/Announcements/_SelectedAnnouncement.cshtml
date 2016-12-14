@@ -18,6 +18,13 @@
                LoadingElementId = "loadingSpinner",
                UpdateTargetId = "displayAnnouncement"
            }, new { @class = "material-icons edit-icon" })
+                @Ajax.ActionLink("remove_red_eye", "GetStudentsSeen", "Announcements", new { announcementId = @Model.Id }, new AjaxOptions
+           {
+               HttpMethod = "Get",
+               InsertionMode = InsertionMode.Replace,
+               LoadingElementId = "loadingSpinner",
+               UpdateTargetId = "displayAnnouncement"
+           }, new { @class = "material-icons" })
             </div>
         }
     </div>
