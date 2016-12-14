@@ -58,11 +58,11 @@ namespace Coursework
             //   appId: "",
             //   appSecret: "");
 
-            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            //{
-            //    ClientId = "",
-            //    ClientSecret = ""
-            //});
+            app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+            {
+                ClientId = "1060477208964-mq85v67bq36l1ucfuovicpsd4jrbci4l.apps.googleusercontent.com",
+                ClientSecret = "IwOvJPyLonZ-7u0VSbcdUgDR"
+            });
         }
     }
 }
