@@ -225,6 +225,7 @@
     <Compile Include="Models\Announcement.cs" />
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\HasSeen.cs" />
+    <Compile Include="Models\HasSeenViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -313,6 +314,7 @@
     <Content Include="Views\Announcements\_CreateAnnouncement.cshtml" />
     <Content Include="Views\Comments\_CreateComment.cshtml" />
     <Content Include="Views\Comments\_EditComment.cshtml" />
+    <Content Include="Views\Announcements\_HasSeenAnnouncement.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

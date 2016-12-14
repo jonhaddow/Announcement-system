@@ -6,6 +6,7 @@ using System.Net;
 using System.Web.Mvc;
 using Coursework.Models;
 using Microsoft.AspNet.Identity;
+using System.Web.Security;
 
 namespace Coursework.Controllers
 {
@@ -41,7 +42,7 @@ namespace Coursework.Controllers
                 if (existingRows.Count() == 0)
                 {
                     // Add row to database
-                    HasSeen prepareObj =  new HasSeen();
+                    HasSeen prepareObj = new HasSeen();
                     prepareObj.Announcement = announcement;
                     prepareObj.User = getUser();
                     db.HasSeens.Add(prepareObj);
@@ -57,9 +58,34 @@ namespace Coursework.Controllers
             return PartialView("_SelectedAnnouncement", announcement);
         }
 
-        public string GetStudentsSeen(int announcement)
+        public ActionResult GetStudentsSeen(int announcementId)
         {
-            return "";
+            // Get a list of all users that have seen the announcement.
+            IEnumerable<HasSeen> hasSeens = db.HasSeens.Where(a => a.Announcement.Id == announcementId).ToList();
+            List<ApplicationUser> studentsSeen = new List<ApplicationUser>();
+            foreach (HasSeen hasSeen in hasSeens)
+            {
+                studentsSeen.Add(hasSeen.User);
+            }
+
+            // Get a list of all students on the system.
+            IEnumerable<ApplicationUser> allUsers = db.Users.ToList();
+            List<ApplicationUser> allStudents = new List<ApplicationUser>();
+            foreach (ApplicationUser user in allUsers)
+            {
+                if (!Roles.IsUserInRole(user.UserName, "canModifyAnnouncements"))
+                {
+                    allStudents.Add(user);
+                }
+            }
+
+            // Set up model to give to view. 
+            //(model holds a 2 lists: Students who've viewed, and students who haven't)
+            HasSeenViewModel hasSeenViewModel = new HasSeenViewModel();
+            hasSeenViewModel.Seen = studentsSeen;
+            // Get all students except those who have seen the announcement.
+            hasSeenViewModel.NotSeen = allStudents.Except(studentsSeen);
+            return PartialView("_HasSeenAnnouncement", hasSeenViewModel);
         }
 
         [Authorize(Roles = "canModifyAnnouncements")]
@@ -121,7 +147,7 @@ namespace Coursework.Controllers
                 db.SaveChanges();
 
                 // Return back to announcement page.
-               return  RedirectToAction("Index","Announcements");
+                return RedirectToAction("Index", "Announcements");
             }
             return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         }
