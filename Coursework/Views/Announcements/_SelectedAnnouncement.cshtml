@@ -2,38 +2,47 @@
 
 <div id="displayAnnouncement" class="selected-announcement">
     <div class="announcement-heading">
-        <div class="title-info">
-            <h2>@Html.DisplayFor(a => a.Title)</h2>
-            <span class="author">
-                - @Html.DisplayFor(a => a.User.UserName)
-            </span>
-        </div>
-        @if (ViewBag.isLecturer)
-        {
-            <div class="modify-container">
-                @Ajax.ActionLink("remove_red_eye", "GetStudentsSeen", "Announcements", new { announcementId = @Model.Id }, new AjaxOptions
-           {
-               HttpMethod = "Get",
-               InsertionMode = InsertionMode.Replace,
-               LoadingElementId = "loadingSpinner",
-               UpdateTargetId = "displayAnnouncement"
-           }, new { @class = "material-icons get-students-seen-icon" })
-                @Ajax.ActionLink("edit", "Edit", "Announcements", new { announcementId = @Model.Id }, new AjaxOptions
-           {
-               HttpMethod = "Get",
-               InsertionMode = InsertionMode.Replace,
-               LoadingElementId = "loadingSpinner",
-               UpdateTargetId = "displayAnnouncement"
-           }, new { @class = "material-icons edit-icon" })
+        <div class="row">
+            <div class="title-info col-sm-9">
+                <h2>@Html.DisplayFor(a => a.Title)</h2>
+                <span class="author">
+                    - @Html.DisplayFor(a => a.User.UserName)
+                </span>
             </div>
-        }
+            @if (ViewBag.isLecturer)
+            {
+                <div class="modify-container col-sm-3">
+
+                    <span class="" title="Views">
+                        @Ajax.ActionLink("remove_red_eye", "GetStudentsSeen", "Announcements", new { announcementId = @Model.Id }, new AjaxOptions
+               {
+                   HttpMethod = "Get",
+                   InsertionMode = InsertionMode.Replace,
+                   LoadingElementId = "loadingSpinner",
+                   UpdateTargetId = "displayAnnouncement"
+               }, new { @class = "material-icons get-students-seen-icon" })
+                    </span>
+                    <span class="" title="Edit">
+                        @Ajax.ActionLink("edit", "Edit", "Announcements", new { announcementId = @Model.Id }, new AjaxOptions
+               {
+                   HttpMethod = "Get",
+                   InsertionMode = InsertionMode.Replace,
+                   LoadingElementId = "loadingSpinner",
+                   UpdateTargetId = "displayAnnouncement"
+               }, new { @class = "material-icons edit-icon" })
+                    </span>
+                </div>
+            }
+        </div>
     </div>
     <div class=announcement-content>@Html.DisplayFor(a => a.Content)</div>
-    <div class="twitter-container"><a class="twitter-share-button"
-   href="https://twitter.com/intent/tweet?text=@Model.Title"
-   data-size="large">
-    Tweet
-</a></div>
+    <div class="twitter-container">
+        <a class="twitter-share-button"
+           href="https://twitter.com/intent/tweet?text=@Model.Title"
+           data-size="large">
+            Tweet
+        </a>
+    </div>
 </div>
 
 <div id="displayComments" class="announcement-comments">
@@ -45,6 +54,5 @@
 </div>
 
 <script src="~/CustomScripts/SelectedAnnouncement.js"></script>
-<script src="~/Scripts/jBox.min.js"></script>
 <script src="https://platform.twitter.com/widgets.js"></script>
 

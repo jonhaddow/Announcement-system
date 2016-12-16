@@ -93,15 +93,12 @@ a:visited, a:hover, a:active {
 }
 
 .title-info {
-    float: left;
-    width: 80%;
     word-wrap: break-word;
 }
 
 .modify-container {
     margin: 20px 0px 10px 0px;
-    float: right;
-    width: 20%;
+
 }
 
 .delete-announcement-icon, .edit-icon, .get-students-seen-icon {

@@ -18,6 +18,7 @@ namespace Coursework
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.min.css",
+                      "~/Content/myBootstrapStyling.less",
                       "~/Content/site.css",
                       "~/Content/sweetalert.css",
                       "~/Content/jBox.css"));
