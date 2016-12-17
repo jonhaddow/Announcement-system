@@ -1,4 +1,5 @@
 ﻿@model Coursework.Models.Announcement
+@using Coursework.Helpers
 
 <div id="displayAnnouncement" class="selected-announcement">
     <div class="announcement-heading">
@@ -12,25 +13,22 @@
             @if (ViewBag.isLecturer)
             {
                 <div class="modify-container col-sm-3">
+                        @Ajax.RawActionLink("<span class='glyphicon glyphicon-edit'></span> Edit", "Edit", "Announcements", new { announcementId = @Model.Id }, new AjaxOptions
+                   {
+                       HttpMethod = "Get",
+                       InsertionMode = InsertionMode.Replace,
+                       LoadingElementId = "loadingSpinner",
+                       UpdateTargetId = "displayAnnouncement"
+                   }, new { @class = "btn btn-default btn-sm" })
 
-                    <span class="" title="Views">
-                        @Ajax.ActionLink("remove_red_eye", "GetStudentsSeen", "Announcements", new { announcementId = @Model.Id }, new AjaxOptions
-               {
-                   HttpMethod = "Get",
-                   InsertionMode = InsertionMode.Replace,
-                   LoadingElementId = "loadingSpinner",
-                   UpdateTargetId = "displayAnnouncement"
-               }, new { @class = "material-icons get-students-seen-icon" })
-                    </span>
-                    <span class="" title="Edit">
-                        @Ajax.ActionLink("edit", "Edit", "Announcements", new { announcementId = @Model.Id }, new AjaxOptions
-               {
-                   HttpMethod = "Get",
-                   InsertionMode = InsertionMode.Replace,
-                   LoadingElementId = "loadingSpinner",
-                   UpdateTargetId = "displayAnnouncement"
-               }, new { @class = "material-icons edit-icon" })
-                    </span>
+                        @Ajax.RawActionLink("<span class='glyphicon glyphicon-eye-open'></span> Views", "GetStudentsSeen", "Announcements", new { announcementId = @Model.Id }, new AjaxOptions
+                   {
+                       HttpMethod = "Get",
+                       InsertionMode = InsertionMode.Replace,
+                       LoadingElementId = "loadingSpinner",
+                       UpdateTargetId = "displayAnnouncement"
+                   }, new { @class = "btn btn-info btn-sm"})
+
                 </div>
             }
         </div>
@@ -54,5 +52,4 @@
 </div>
 
 <script src="~/CustomScripts/SelectedAnnouncement.js"></script>
-<script src="https://platform.twitter.com/widgets.js"></script>
-
+<script src="~/Scripts/twitterwidget.js"></script>

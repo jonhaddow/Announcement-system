@@ -1,8 +1,7 @@
 ﻿@model Coursework.Models.ExternalLoginListViewModel
 @using Microsoft.Owin.Security
 
-<h4>Use another service to log in.</h4>
-<hr />
+<h4 class="text-center">Or</h4>
 @{
     var loginProviders = Context.GetOwinContext().Authentication.GetExternalAuthenticationTypes();
     if (loginProviders.Count() == 0) {
@@ -15,12 +14,12 @@
     else {
         using (Html.BeginForm("ExternalLogin", "Account", new { ReturnUrl = Model.ReturnUrl })) {
             @Html.AntiForgeryToken()
-            <div id="socialLoginList">
-                <p>
+            <div id="socialLoginList" >
+                <p class="text-center">
                     @foreach (AuthenticationDescription p in loginProviders)
                     {
                         <input type="image" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType"
-                                 src="~/Content/btn_google_signin_light_normal_web.png" />
+                                 src="~/Content/btn_google_signin_light_normal_web.png"  />
                     }
                 </p>
             </div>

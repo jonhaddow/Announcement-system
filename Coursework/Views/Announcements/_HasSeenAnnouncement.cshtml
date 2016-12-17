@@ -1,25 +1,29 @@
 ﻿@model Coursework.Models.HasSeenViewModel
 
-@Ajax.ActionLink("arrow_back", "GetAnnouncement", "Announcements", new { announcementId = Model.Announcement.Id }, new AjaxOptions
-{ 
+
+<div id="headerLine">
+    @Ajax.ActionLink("arrow_back", "GetAnnouncement", "Announcements", new { announcementId = Model.Announcement.Id }, new AjaxOptions
+{
     HttpMethod = "GET",
     InsertionMode = InsertionMode.Replace,
     LoadingElementId = "loadingSpinner",
     UpdateTargetId = "selectedAnnouncement"
 }, new { @class = "material-icons return-to-announcement" })
-<h3>Views for: </h3>
+    <h3>Views for: </h3>
+</div>
 <h4 class="view-title">@Model.Announcement.Title</h4>
 <hr />
 <h5 class="percentage"><b>@ViewBag.Percentage%</b> Percent of students have seen this announcement.</h5>
 <table class="table seen-table">
     <tr>
-        <th class="table-header">@Html.DisplayNameFor(model=>model.Seen)</th>
+        <th class="table-header">@Html.DisplayNameFor(model => model.Seen)</th>
     </tr>
-@foreach (var item in Model.Seen) {
-    <tr>
-        <td class="student-name">@item.UserName</td>
-    </tr>
-}
+    @foreach (var item in Model.Seen)
+    {
+        <tr>
+            <td class="student-name">@item.UserName</td>
+        </tr>
+    }
 </table>
 <table class="table not-seen-table">
     <tr>

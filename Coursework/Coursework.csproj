@@ -217,6 +217,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\HelperExtensions.cs" />
     <Compile Include="Migrations\201612051029387_Initial.cs" />
     <Compile Include="Migrations\201612051029387_Initial.Designer.cs">
       <DependentUpon>201612051029387_Initial.cs</DependentUpon>
@@ -239,8 +240,8 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\btn_google_signin_light_normal_web.png" />
-    <Content Include="Content\jBox.css" />
-    <Content Include="Content\ring.svg" />
+    <Content Include="Content\loader.svg" />
+    <Content Include="Content\materialicons.css" />
     <Content Include="Content\sweetalert.css" />
     <Content Include="CustomScripts\AnnouncementComments.js" />
     <Content Include="CustomScripts\CreateComment.js" />
@@ -265,11 +266,10 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
-    <Content Include="Content\myBootstrapStyling.less" />
+    <Content Include="Content\myBootstrapStyling.css" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Scripts\jBox.min.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />
     <Content Include="Scripts\jquery-3.1.1.min.js" />
     <Content Include="Scripts\jquery-3.1.1.slim.js" />
@@ -289,6 +289,7 @@
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\sweetalert.min.js" />
+    <Content Include="Scripts\twitterwidget.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>

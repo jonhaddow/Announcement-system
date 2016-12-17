@@ -5,11 +5,11 @@
 }
 
 <div hidden id="loadingSpinner">
-    <img src="~/Content/ring.svg" />
+    <img src="~/Content/loader.svg" />
 </div>
 
 <div class="sidebar col-sm-4">
-    <h2>@ViewBag.Title</h2>
+    <h2 class="text-center">@ViewBag.Title</h2>
     @if (ViewBag.isLecturer)
     {
         @Ajax.ActionLink("Create New",
@@ -32,7 +32,7 @@
         }, new { id = "announcementButton" }))
         {
             @Html.Hidden("announcementId", item.Id)
-            <button class="announcement-link" type="submit">
+            <button class="announcement-button" type="submit">
                 <div>
                     @item.Title
                 </div>
@@ -43,14 +43,13 @@
     }
 </div>
 
-<div id="selectedAnnouncement" class="outline col-sm-8"></div>
+<div id="noAnnouncementSelected" class="col-sm-8">No announcement selected.</div>
+
+<div hidden id="selectedAnnouncement" class="outline col-sm-8"></div>
 
 @section Styles {
     <link href="@Url.Content("~/Content/announcements.css")" rel="stylesheet" type="text/css" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/tweet/2.2.0/jquery.tweet.min.css" rel="stylesheet" type="text/css" />
 }
 @section Scripts {
     <script src="~/CustomScripts/indexAnnouncement.js"></script>
-    <script src="~/Scripts/sweetalert.min.js"></script>
-    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
 }
