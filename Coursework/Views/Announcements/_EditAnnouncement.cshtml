@@ -12,7 +12,9 @@
            HttpMethod = "GET",
            InsertionMode = InsertionMode.Replace,
            LoadingElementId = "loadingSpinner",
-           UpdateTargetId = "selectedAnnouncement"
+           UpdateTargetId = "selectedAnnouncement",
+                   OnBegin = "toggleSelectedAnnouncement();",
+           OnComplete = "toggleSelectedAnnouncement();"
        }, new { @class = "material-icons return-to-announcement" })
             <h3>Edit Announcement</h3>
         </div>
@@ -37,7 +39,7 @@
     <button id="updateAnnouncementButton" class="btn btn-primary" type="submit">
         Update
     </button>
-    <button id="deleteAnnouncementButton" class="btn btn-danger" type="button">
+    <button id="deleteAnnouncementButton" class="btn btn-danger delete-announcement-button" type="button">
         Delete
     </button>
 }

@@ -7,7 +7,9 @@
     HttpMethod = "GET",
     InsertionMode = InsertionMode.Replace,
     LoadingElementId = "loadingSpinner",
-    UpdateTargetId = "selectedAnnouncement"
+    UpdateTargetId = "selectedAnnouncement",
+    OnBegin = "toggleSelectedAnnouncement();",
+    OnComplete = "toggleSelectedAnnouncement();"
 }, new { @class = "material-icons return-to-announcement" })
     <h3>Views for: </h3>
 </div>

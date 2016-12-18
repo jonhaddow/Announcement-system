@@ -4,10 +4,6 @@
     ViewBag.Title = "Announcements";
 }
 
-<div hidden id="loadingSpinner">
-    <img src="~/Content/loader.svg" />
-</div>
-
 <div class="sidebar col-sm-4">
     <h2 class="text-center">@ViewBag.Title</h2>
     @if (ViewBag.isLecturer)
@@ -28,7 +24,9 @@
             InsertionMode = InsertionMode.Replace,
             HttpMethod = "POST",
             UpdateTargetId = "selectedAnnouncement",
-            LoadingElementId = "loadingSpinner"
+            LoadingElementId = "loadingSpinner",
+            OnBegin = "toggleSelectedAnnouncement();",
+            OnComplete = "toggleSelectedAnnouncement();"
         }, new { id = "announcementButton" }))
         {
             @Html.Hidden("announcementId", item.Id)
@@ -37,19 +35,22 @@
                     @item.Title
                 </div>
                 @if (item.Important)
-                { <span class="important">!</span> }
+                {
+                    <span class="glyphicon glyphicon-exclamation-sign"></span>
+                }
             </button>
         }
     }
 </div>
 
-<div id="noAnnouncementSelected" class="col-sm-8">No announcement selected.</div>
+<div class="col-sm-8 loading-spinner" hidden id="loadingSpinner">
+    <img src="~/Content/loader.svg" />
+</div>
+
+<div id="noAnnouncementContainer" class="col-sm-8 no-announcement-container"><div>No announcement selected.</div></div>
 
 <div hidden id="selectedAnnouncement" class="outline col-sm-8"></div>
 
-@section Styles {
-    <link href="@Url.Content("~/Content/announcements.css")" rel="stylesheet" type="text/css" />
-}
 @section Scripts {
     <script src="~/CustomScripts/indexAnnouncement.js"></script>
 }

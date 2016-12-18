@@ -1,53 +1,69 @@
 ﻿@model Coursework.Models.Announcement
 @using Coursework.Helpers
 
-<div id="displayAnnouncement" class="selected-announcement">
-    <div class="announcement-heading">
+<div id="displayAnnouncement" class="selected-announcement row">
+    <div class="col-sm-12">
         <div class="row">
             <div class="title-info col-sm-9">
                 <h2>@Html.DisplayFor(a => a.Title)</h2>
-                <span class="author">
+                <span>
                     - @Html.DisplayFor(a => a.User.UserName)
                 </span>
             </div>
             @if (ViewBag.isLecturer)
             {
                 <div class="modify-container col-sm-3">
-                        @Ajax.RawActionLink("<span class='glyphicon glyphicon-edit'></span> Edit", "Edit", "Announcements", new { announcementId = @Model.Id }, new AjaxOptions
-                   {
-                       HttpMethod = "Get",
-                       InsertionMode = InsertionMode.Replace,
-                       LoadingElementId = "loadingSpinner",
-                       UpdateTargetId = "displayAnnouncement"
-                   }, new { @class = "btn btn-default btn-sm" })
+                    @Ajax.RawActionLink("<span class='glyphicon glyphicon-edit'></span> Edit", "Edit", "Announcements", new { announcementId = @Model.Id }, new AjaxOptions
+               {
+                   HttpMethod = "Get",
+                   InsertionMode = InsertionMode.Replace,
+                   LoadingElementId = "loadingSpinner",
+                   UpdateTargetId = "displayAnnouncement",
+                   OnBegin = "toggleSelectedAnnouncement();",
+                   OnComplete = "toggleSelectedAnnouncement();"
+               }, new { @class = "btn btn-default btn-sm" })
 
-                        @Ajax.RawActionLink("<span class='glyphicon glyphicon-eye-open'></span> Views", "GetStudentsSeen", "Announcements", new { announcementId = @Model.Id }, new AjaxOptions
-                   {
-                       HttpMethod = "Get",
-                       InsertionMode = InsertionMode.Replace,
-                       LoadingElementId = "loadingSpinner",
-                       UpdateTargetId = "displayAnnouncement"
-                   }, new { @class = "btn btn-info btn-sm"})
+                    @Ajax.RawActionLink("<span class='glyphicon glyphicon-eye-open'></span> Views", "GetStudentsSeen", "Announcements", new { announcementId = @Model.Id }, new AjaxOptions
+               {
+                   HttpMethod = "Get",
+                   InsertionMode = InsertionMode.Replace,
+                   LoadingElementId = "loadingSpinner",
+                   UpdateTargetId = "displayAnnouncement",
+                   OnBegin = "toggleSelectedAnnouncement();",
+                   OnComplete = "toggleSelectedAnnouncement();"
+               }, new { @class = "btn btn-info btn-sm" })
 
                 </div>
             }
         </div>
     </div>
-    <div class=announcement-content>@Html.DisplayFor(a => a.Content)</div>
-    <div class="twitter-container">
-        <a class="twitter-share-button"
-           href="https://twitter.com/intent/tweet?text=@Model.Title"
-           data-size="large">
-            Tweet
-        </a>
+    <div class="col-sm-12">
+        <div class="row">
+            <div class=announcement-content>@Html.DisplayFor(a => a.Content)</div>
+            <div class="twitter-container">
+                <a class="twitter-share-button"
+                   href="https://twitter.com/intent/tweet?text=@Model.Title"
+                   data-size="large">
+                    Tweet
+                </a>
+            </div>
+        </div>
     </div>
 </div>
 
-<div id="displayComments" class="announcement-comments">
-    <h3 class="comments-heading">Comments</h3>
-    <div id="comments">@Html.Action("GetComments", "Comments", new { announcementId = Model.Id })</div>
-    <div id="addComment">
-        @Html.Action("CreateView", "Comments", new { announcementId = Model.Id })
+<div id="displayComments" class="announcement-comments row">
+    <div class="col-sm-12">
+        <div class="row">
+            <h3 class="comments-heading">Comments</h3>
+        </div>
+        <div class="row">
+            <div id="comments">@Html.Action("GetComments", "Comments", new { announcementId = Model.Id })</div>
+        </div>
+        <div class="row">
+            <div id="addComment">
+                @Html.Action("CreateView", "Comments", new { announcementId = Model.Id })
+            </div>
+        </div>
     </div>
 </div>
 

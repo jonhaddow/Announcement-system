@@ -1,5 +1,5 @@
 ﻿body {
-    padding-top: 50px;
+    padding-top: 70px;
     padding-bottom: 20px;
 }
 
@@ -16,60 +16,223 @@
     white-space: normal;
 }
 
-.delete-icon {
-    color: red;
-    float: right;
+.sidebar {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    background-color: #99A7FF; /*sidebar blue*/
+    color: white;
 }
 
-textarea.contentTextArea {
-    height: 200px;
-}
+    .sidebar > a {
+        color: white;
+        padding-bottom: 10px;
+        float: right;
+    }
 
-.table {
-}
-
-.tableAnnouncement {
-    display: block;
+.announcement-button {
+    padding: 20px 10px 20px 10px;
+    text-align: center;
+    font-size: 16pt;
+    overflow: visible;
     width: 100%;
-    text-decoration: none;
-    color: black;
+    border: none;
+    border-bottom: 2px solid #7b90ba;
+    color: #565656; /*Color of text*/
+    background-color: #FFFECD; /*announcement buttons background*/
+    word-wrap: break-word;
 }
 
-    .tableAnnouncement:hover {
-        background-color: #efefef;
-        text-decoration: none;
+    .announcement-button > div {
+        width: 80%;
+        float: left;
+    }
+
+    .announcement-button:hover {
         color: black;
     }
 
-.announcementTitle {
-    font-size: 25px;
-}
-
-.announcementContent {
-    font-size: 20px;
-}
-
-.announcementEdit {
-    width: 5%;
-}
-
-.detailsAnnouncementTitle {
-    vertical-align: middle;
-}
-
-#announcementDetailsHeader {
-    width: 100%;
-}
-
-.editAnnouncementIcon {
-    float: right;
-    vertical-align: middle;
-}
-
-.backArrow {
-    padding-right: 20px;
-}
-
-    .backArrow:hover {
-        text-decoration: none;
+    .announcement-button > span {
+        color: red;
+        font-size: 18pt;
+        float: left;
+        margin-left: 10%;
+        width: 10%;
     }
+
+.selected {
+    background-color: #FFDC66; /*Selected announcement background color*/
+    color: black;
+}
+
+.loading-spinner {
+    margin-top: 30vh;
+    text-align: center;
+}
+
+.no-announcement-container {
+    text-align: center;
+    margin: 100px 0 0 0;
+}
+
+    .no-announcement-container > div {
+        color: grey;
+        font-size: 20pt;
+        display: inline-block;
+        padding: 50px;
+    }
+
+.outline {
+    background-color: #B9C2FF; /*background color for right panel outline*/
+    color: #666;
+}
+
+.selected-announcement {
+    padding: 20px;
+    background-color: white;
+    margin: 20px 0 20px 0;
+    overflow: hidden;
+}
+
+.title-info {
+    word-wrap: break-word;
+}
+
+    .title-info > span {
+        padding-left: 15px;
+        font-style: italic;
+    }
+
+.modify-container {
+    margin: 20px 0px 10px 0px;
+}
+
+.get-students-seen-icon {
+    padding-left: 10px;
+}
+
+.announcement-content {
+    padding-top: 40px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+.twitter-container {
+    float: right;
+}
+
+.delete-announcement-button {
+    float: right;
+}
+
+.announcement-comments {
+    padding: 20px 40px 20px 40px;
+    background-color: white;
+    margin: 20px 0 20px 0;
+}
+
+.comments-heading {
+    padding-bottom: 1em;
+}
+
+.comment-block {
+    width: 100%;
+    padding: 20px 0px 20px 0px;
+}
+
+.comment-content {
+    width: 85%;
+    display: inline-block;
+    align-content: center;
+    word-wrap: break-word;
+}
+
+    .comment-content > div {
+        white-space: pre-wrap;
+    }
+
+.comment-author {
+    color: #999;
+    font-style: italic;
+}
+
+.modify-comment {
+    float: right;
+    cursor: pointer;
+    width: 15%;
+}
+
+.edit-comment-icon {
+    color: darkgrey;
+}
+
+    .edit-comment-icon:hover {
+        text-decoration: none;
+        color: grey;
+    }
+
+.delete-comment-icon {
+    color: red;
+}
+
+    .delete-comment-icon:hover {
+        color: darkred;
+    }
+
+.comment-separator {
+    margin: 0px;
+}
+
+.return-to-announcement {
+    float: left;
+    margin: 0px 10px 0 0;
+    padding: 0;
+}
+.return-to-announcement:hover,.return-to-announcement:visited, .return-to-announcement:focus {
+    text-decoration: none;
+}
+
+.add-commentbox, .add-commentbox:focus {
+    outline: none !important;
+    border: 1px solid #aabad9;
+    box-shadow: 0 0 10px #719ECE;
+}
+
+.edit-commentbox, .edit-commentbox:focus {
+    outline: none !important;
+    border: 1px solid #74f77f;
+    box-shadow: 0 0 10px #719ECE;
+}
+
+.not-seen-table, .seen-table {
+    float: left;
+    width: 50%;
+}
+
+.table .student-name, .table .table-header {
+    border: none;
+}
+
+.not-seen {
+    color: red;
+}
+
+.table .table-header {
+    border-bottom: solid 1px grey;
+}
+
+.clear {
+    clear: both;
+}
+
+.view-title {
+    font-style: italic;
+    padding-left: 40px;
+}
+
+.percentage {
+    color: grey;
+}
+
+.material-icons {
+    font-size: 20pt;
+}

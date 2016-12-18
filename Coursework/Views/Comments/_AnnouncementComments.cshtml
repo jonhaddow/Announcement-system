@@ -20,7 +20,9 @@
                HttpMethod = "Get",
                InsertionMode = InsertionMode.Replace,
                LoadingElementId = "loadingSpinner",
-               UpdateTargetId = comment.Id.ToString()
+               UpdateTargetId = comment.Id.ToString(),
+               OnBegin = "toggleSelectedAnnouncement();",
+               OnComplete = "toggleSelectedAnnouncement();"
            }, new { @class = "material-icons edit-comment-icon" })
                 <i id="deleteCommentButton" class="material-icons delete-comment-icon" onclick="deleteComment('@comment.Id')">delete</i>
             }

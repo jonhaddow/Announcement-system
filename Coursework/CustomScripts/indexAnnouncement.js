@@ -1,9 +1,12 @@
-﻿
+﻿function toggleSelectedAnnouncement() {
+    $("#selectedAnnouncement").toggle();
+}
+
 $(function () {
     // When an announcement is selected.
     $(".announcement-button").click(function () {
 
-        $("#noAnnouncementSelected").hide();
+        $("#noAnnouncementContainer").hide();
         $("#selectedAnnouncement").show();
 
         // The selected announcement changes colour
@@ -14,7 +17,7 @@ $(function () {
     // When create new announcement link is clicked
     $(".create-announcement-link").click(function () {
 
-        $("#noAnnouncementSelected").hide();
+        $("#noAnnouncementContainer").hide();
         $("#selectedAnnouncement").show();
 
         // Change colours of announcements back to default.

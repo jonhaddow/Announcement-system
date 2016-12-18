@@ -5,7 +5,10 @@
     InsertionMode = InsertionMode.Replace,
     HttpMethod = "POST",
     UpdateTargetId = "comments",
-    OnSuccess = "afterCreateComment()"
+    LoadingElementId = "loadingSpinner",
+    OnSuccess = "afterCreateComment()",
+    OnBegin = "toggleSelectedAnnouncement();",
+    OnComplete = "toggleSelectedAnnouncement();"
 }, new { id = "addCommentForm" }))
 {
     @Html.AntiForgeryToken()
@@ -13,7 +16,7 @@
     <div class="form-horizontal">
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
-            @Html.EditorFor(model => model.Content, new { htmlAttributes = new { id = "newCommentContent", @class = "form-control adding", placeholder = "Add Comment" } })
+            @Html.EditorFor(model => model.Content, new { htmlAttributes = new { id = "newCommentContent", @class = "form-control add-commentbox", placeholder = "Add Comment" } })
             @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
         </div>
         <div class="form-group">
