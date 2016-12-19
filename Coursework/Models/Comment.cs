@@ -2,6 +2,7 @@
 
 namespace Coursework.Models
 {
+    // This model defines each comment a user makes under an announcement.
     public class Comment
     {
         public virtual int Id { get; set; }
@@ -11,8 +12,8 @@ namespace Coursework.Models
         [DataType(DataType.MultilineText)]
         public virtual string Content { get; set; }
 
-        public virtual Announcement Announcement { get; set; }
+        public virtual Announcement Announcement { get; set; } // Link each comment to a single announcement
 
-        public virtual ApplicationUser User { get; set; }
+        public virtual ApplicationUser User { get; set; } // Link each comment to a User
     }
 }

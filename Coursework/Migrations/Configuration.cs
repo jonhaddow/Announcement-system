@@ -3,8 +3,6 @@ namespace Coursework.Migrations
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.EntityFramework;
     using Models;
-    using System;
-    using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
 
@@ -13,7 +11,6 @@ namespace Coursework.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
-            
         }
 
         //  This method will be called after migrating to the latest version.

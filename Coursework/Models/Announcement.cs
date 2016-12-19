@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Coursework.Models
 {
+    // This model defines each announcement that a lecturer makes.
     public class Announcement
     {
         public virtual int Id { get; set; }
@@ -21,6 +22,6 @@ namespace Coursework.Models
         [DisplayName("Mark as Important")]
         public virtual bool Important { get; set; } // True if lecturer wants to flag announcement as important
 
-        public virtual ApplicationUser User { get; set; }
+        public virtual ApplicationUser User { get; set; } // Link each announcement to a user.
     }
 }

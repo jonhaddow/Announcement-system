@@ -21,10 +21,10 @@
                InsertionMode = InsertionMode.Replace,
                LoadingElementId = "loadingSpinner",
                UpdateTargetId = comment.Id.ToString(),
-               OnBegin = "toggleSelectedAnnouncement();",
-               OnComplete = "toggleSelectedAnnouncement();"
+               OnBegin = "hideSelectedAnnouncement();",
+               OnComplete = "showSelectedAnnouncement();"
            }, new { @class = "material-icons edit-comment-icon" })
-                <i id="deleteCommentButton" class="material-icons delete-comment-icon" onclick="deleteComment('@comment.Id')">delete</i>
+                <i class="material-icons delete-comment-icon" onclick="deleteComment('@comment.Id')">delete</i>
             }
         </div>
     </div>

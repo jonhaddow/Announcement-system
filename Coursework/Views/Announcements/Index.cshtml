@@ -14,7 +14,9 @@
            UpdateTargetId = "selectedAnnouncement",
            InsertionMode = InsertionMode.Replace,
            HttpMethod = "GET",
-           LoadingElementId = "loadingSpinner"
+           LoadingElementId = "loadingSpinner",
+           OnBegin = "hideSelectedAnnouncement();",
+           OnComplete = "showSelectedAnnouncement();"
        }, new { @class = "create-announcement-link" })
     }
     @foreach (var item in Model)
@@ -25,8 +27,8 @@
             HttpMethod = "POST",
             UpdateTargetId = "selectedAnnouncement",
             LoadingElementId = "loadingSpinner",
-            OnBegin = "toggleSelectedAnnouncement();",
-            OnComplete = "toggleSelectedAnnouncement();"
+            OnBegin = "hideSelectedAnnouncement();",
+            OnComplete = "showSelectedAnnouncement();"
         }, new { id = "announcementButton" }))
         {
             @Html.Hidden("announcementId", item.Id)

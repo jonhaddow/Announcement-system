@@ -4,7 +4,7 @@
 {
     @Html.AntiForgeryToken()
     <div class="announcement-heading">
-        @Html.HiddenFor(model => model.Id, new { id = "announcementId" })
+        @Html.HiddenFor(model => Model.Id, new { id = "selectedAnnouncementId" })
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div id="headerLine">
             @Ajax.ActionLink("arrow_back", "GetAnnouncement", "Announcements", new { announcementId = Model.Id }, new AjaxOptions
@@ -13,8 +13,8 @@
            InsertionMode = InsertionMode.Replace,
            LoadingElementId = "loadingSpinner",
            UpdateTargetId = "selectedAnnouncement",
-                   OnBegin = "toggleSelectedAnnouncement();",
-           OnComplete = "toggleSelectedAnnouncement();"
+           OnBegin = "hideSelectedAnnouncement();",
+           OnComplete = "showSelectedAnnouncement();"
        }, new { @class = "material-icons return-to-announcement" })
             <h3>Edit Announcement</h3>
         </div>

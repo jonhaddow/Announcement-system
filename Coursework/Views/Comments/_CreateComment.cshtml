@@ -7,8 +7,8 @@
     UpdateTargetId = "comments",
     LoadingElementId = "loadingSpinner",
     OnSuccess = "afterCreateComment()",
-    OnBegin = "toggleSelectedAnnouncement();",
-    OnComplete = "toggleSelectedAnnouncement();"
+    OnBegin = "hideSelectedAnnouncement();",
+    OnComplete = "showSelectedAnnouncement();"
 }, new { id = "addCommentForm" }))
 {
     @Html.AntiForgeryToken()

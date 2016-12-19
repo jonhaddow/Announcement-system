@@ -19,8 +19,8 @@
                    InsertionMode = InsertionMode.Replace,
                    LoadingElementId = "loadingSpinner",
                    UpdateTargetId = "displayAnnouncement",
-                   OnBegin = "toggleSelectedAnnouncement();",
-                   OnComplete = "toggleSelectedAnnouncement();"
+                   OnBegin = "hideSelectedAnnouncement();",
+                   OnComplete = "showSelectedAnnouncement();"
                }, new { @class = "btn btn-default btn-sm" })
 
                     @Ajax.RawActionLink("<span class='glyphicon glyphicon-eye-open'></span> Views", "GetStudentsSeen", "Announcements", new { announcementId = @Model.Id }, new AjaxOptions
@@ -29,8 +29,8 @@
                    InsertionMode = InsertionMode.Replace,
                    LoadingElementId = "loadingSpinner",
                    UpdateTargetId = "displayAnnouncement",
-                   OnBegin = "toggleSelectedAnnouncement();",
-                   OnComplete = "toggleSelectedAnnouncement();"
+                   OnBegin = "hideSelectedAnnouncement();",
+                   OnComplete = "showSelectedAnnouncement();"
                }, new { @class = "btn btn-info btn-sm" })
 
                 </div>
@@ -67,5 +67,4 @@
     </div>
 </div>
 
-<script src="~/CustomScripts/SelectedAnnouncement.js"></script>
 <script src="~/Scripts/twitterwidget.js"></script>

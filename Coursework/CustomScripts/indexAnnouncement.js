@@ -1,5 +1,9 @@
-﻿function toggleSelectedAnnouncement() {
-    $("#selectedAnnouncement").toggle();
+﻿// Called before and after each ajax request
+function hideSelectedAnnouncement() {
+    $("#selectedAnnouncement").hide();
+}
+function showSelectedAnnouncement() {
+    $("#selectedAnnouncement").show();
 }
 
 $(function () {
@@ -7,10 +11,10 @@ $(function () {
     $(".announcement-button").click(function () {
 
         $("#noAnnouncementContainer").hide();
-        $("#selectedAnnouncement").show();
 
-        // The selected announcement changes colour
+        // Change colours of announcements back to default.
         $(".announcement-button").removeClass("selected");
+        // The selected announcement changes colour
         $(this).addClass("selected");
     });
 
@@ -18,7 +22,6 @@ $(function () {
     $(".create-announcement-link").click(function () {
 
         $("#noAnnouncementContainer").hide();
-        $("#selectedAnnouncement").show();
 
         // Change colours of announcements back to default.
         $(".announcement-button").removeClass("selected");

@@ -5,6 +5,8 @@
     InsertionMode = InsertionMode.Replace,
     HttpMethod = "POST",
     UpdateTargetId = "comments",
+    OnBegin = "hideSelectedAnnouncement();",
+    OnComplete = "showSelectedAnnouncement();"
 }))
 {
     @Html.AntiForgeryToken()
@@ -23,13 +25,12 @@
            InsertionMode = InsertionMode.Replace,
            LoadingElementId = "loadingSpinner",
            UpdateTargetId = "comments",
-           OnBegin = "toggleSelectedAnnouncement();",
-           OnComplete = "toggleSelectedAnnouncement();"
+           OnBegin = "hideSelectedAnnouncement();",
+           OnComplete = "showSelectedAnnouncement();"
        }, new { @class = "btn btn-default" })
             <input type="submit" value="Edit" class="btn btn-primary" />
         </div>
     </div>
 }
 
-<script src="~/CustomScripts/EditComment.js"></script>
 @Scripts.Render("~/bundles/jqueryval")
